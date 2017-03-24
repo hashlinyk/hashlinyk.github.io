@@ -39,13 +39,7 @@ reward: true
 二、对username.github.io仓库新建分支，并克隆
 ---
 
-有两种方式：
-
-* 方式一：先把<code>*username*.github.io</code>仓库克隆到本地（不在hexo博客部署环境目录中，另起一个），然后进入<code>*username*.github.io</code>文件目录，在Git Bash中执行`git branch xxx`命令新建`xxx`分支，再使用`git checkout xxx`切换到该分支；
-
-* 方式二：先在Github上可视化新建`xxx`分支，并切换到该分支，并在该仓库->Settings->Branches->Default branch中将默认分支设为`xxx`，save保存；然后将该仓库克隆到本地，并进入该<code>*username*.github.io</code>文件目录。
-
-上面两种方式只是顺序的差异，本质上没有区别，我采用的是后者。
+在Github的<code>*username*.github.io</code>仓库上新建一个`xxx`分支，并切换到该分支，并在该仓库->Settings->Branches->Default branch中将默认分支设为`xxx`，save保存；然后将该仓库克隆到本地，并进入该<code>*username*.github.io</code>文件目录。
 
 完成上面步骤后，在当前目录使用`git branch`命令查看当前所在分支，应为新建的分支`xxx`：
 
@@ -67,7 +61,7 @@ git branch
 四、提交xxx分支
 ---
 
-在<code>*username*.github.io</code>目录使用Git Bash执行`git add .`、`git commit -m 'back up hexo files'`（引号内容可改）、`git push origin xxx`即可将博客的hexo部署环境提交到GitHub个人仓库的`xxx`分支了。
+在<code>*username*.github.io</code>目录使用Git Bash执行`git add .`、`git commit -m 'back up hexo files'`（引号内容可改）、`git push`即可将博客的hexo部署环境提交到GitHub个人仓库的`xxx`分支了。
 
 现在可以在GitHub上的<code>*username*.github.io</code>仓库看到两个分支的差异了。
 
@@ -85,9 +79,9 @@ git branch
 >* 执行本教程第四步：**提交xxx分支**,保证分支版本最新
 >* 执行`hexo d -g`指令（在此之前，有时可能需要执行`hexo clean`），完成后就会发现，最新改动已经更新到`master`分支了，两个分支互不干扰！
 
-下次回到原来的电脑，再也不需要备份和拷贝了，只需要一次`git pull origin xxx`更新一下新电脑推送的最新版本，即可继续同步维护更新！
+下次回到原来的电脑，再也不需要备份和拷贝了，只需要一次`git pull`更新一下新电脑推送的最新版本，即可继续同步维护更新！
 
-注意每次**换电脑进行博客更新**时，如果上次在其他电脑有更新，此时都需要先`pull`获取最新版本，之后再进行编辑和提交。
+**注意**:每次**换电脑进行博客更新**时，如果上次在其他电脑有更新，此时都需要先`pull`获取最新版本，之后再进行编辑和提交。
 
 
 >*[注解1]*：我百度到的旧版本解决方案见：[使用hexo，如果换了电脑怎么更新博客？](https://www.zhihu.com/question/21193762)，有兴趣可以看看
