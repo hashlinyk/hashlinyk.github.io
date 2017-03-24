@@ -63,11 +63,11 @@ git branch
 
 在<code>*username*.github.io</code>目录使用Git Bash执行`git add .`、`git commit -m 'back up hexo files'`（引号内容可改）、`git push`即可将博客的hexo部署环境提交到GitHub个人仓库的`xxx`分支了。
 
-* 现在可以在GitHub上的<code>*username*.github.io</code>仓库看到两个分支的差异了。
+现在可以在GitHub上的<code>*username*.github.io</code>仓库看到两个分支的差异了。
 
-* `master`分支和`xxx`分支各自保存着一个版本，`master`分支用于保存博客静态资源，提供博客页面供人访问；`xxx`分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突，完美！
+`master`分支和`xxx`分支各自保存着一个版本，`master`分支用于保存博客静态资源，提供博客页面供人访问；`xxx`分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突，完美！
 
-五、新电脑环境部署
+五、新电脑环境部署和更新
 ---
 
 至此，你的博客已经可以在其他电脑上进行同步的维护和更新了，方法很简单：
@@ -76,10 +76,10 @@ git branch
 >* 在新电脑上克隆<code>*username*.github.io</code>仓库的`xxx`分支到本地，此时本地git仓库处于`xxx`分支
 >* 切换到<code>*username*.github.io</code>目录，执行`npm install`(由于仓库有一个`.gitignore`文件，里面默认是忽略掉`node_modules`文件夹的，也就是说仓库的hexo分支并没有存储该目录[也不需要]，所以需要install下)
 >* 写新文章
->* 执行本教程第四步：**提交xxx分支**,保证分支版本最新
+>* 执行本教程第四步：**提交xxx分支**,即依次执行`git add .`、`git commit -m 'back up hexo files'`（引号内容可改）、`git push`指令，保证分支版本最新
 >* 执行`hexo d -g`指令（在此之前，有时可能需要执行`hexo clean`），完成后就会发现，最新改动已经更新到`master`分支了，两个分支互不干扰！
 
-尽情的敲击键盘、挥洒笔墨吧！
+尽情地敲击键盘、挥洒笔墨吧！
 
 **注意**:每次**换电脑进行博客更新**时，如果上次在其他电脑有更新，此时都需要先`git pull`获取最新版本，之后再进行编辑和提交。
 
