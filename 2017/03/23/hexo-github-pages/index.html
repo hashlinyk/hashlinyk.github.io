@@ -19,7 +19,7 @@
 
 只要把公司本地博客根目录存着的source/_posts（文章所在目录）、_config.yml（博客配置文件）以及themes（主题文件目录）都备份一份（多种方式备份：使用U盘、网盘、GitHub仓库），待回到家之后重新hexo init，然后将备份的文件覆盖进去，再hexo">
 <meta property="og:image" content="https://pilgrimerick.github.io/images/9U31M0VVJ.png">
-<meta property="og:updated_time" content="2017-03-24T03:11:45.524Z">
+<meta property="og:updated_time" content="2017-03-24T03:14:38.853Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Hexo，如何在多台电脑上维护和更新github pages博客">
 <meta name="twitter:description" content="今天在公司用hexo搭好博客之后，突然有个疑问：我想要回到家继续写文章、更新博客，该怎么办呢？一个想法很快跳了出来：
@@ -200,7 +200,7 @@
 <p>如果这一步还未完成，请自行搜索如何使用hexo搭建Github Pages个人博客，网上教程一大堆，不再赘述。</p>
 <h2 id="二、对username-github-io仓库新建分支，并克隆"><a href="#二、对username-github-io仓库新建分支，并克隆" class="headerlink" title="二、对username.github.io仓库新建分支，并克隆"></a>二、对username.github.io仓库新建分支，并克隆</h2><p>有两种方式：</p>
 <ul>
-<li><p>先把<code><em>username</em>.github.io</code>克隆到本地，然后进入<code><em>username</em>.github.io</code>文件目录，在Git Bash中执行<code>git branch xxx</code>命令新建<code>xxx</code>分支，再使用<code>git checkout xxx</code>切换到该分支；</p>
+<li><p>先把<code><em>username</em>.github.io</code>克隆到本地（不在hexo博客部署环境目录中，另起一个），然后进入<code><em>username</em>.github.io</code>文件目录，在Git Bash中执行<code>git branch xxx</code>命令新建<code>xxx</code>分支，再使用<code>git checkout xxx</code>切换到该分支；</p>
 </li>
 <li><p>先在Github上可视化新建<code>xxx</code>分支，并切换到该分支，并在该仓库-&gt;Settings-&gt;Branches-&gt;Default branch中将默认分支设为<code>xxx</code>，save保存；然后将该仓库克隆到本地，并进入该<code><em>username</em>.github.io</code>文件目录。</p>
 </li>
