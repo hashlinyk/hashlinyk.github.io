@@ -63,11 +63,13 @@ git branch
 >* 将新电脑的生成的ssh key添加到GitHub账户上
 >* 在新电脑上克隆<code>*username*.github.io</code>仓库的`xxx`分支到本地，此时本地git仓库处于`xxx`分支
 >* 切换到<code>*username*.github.io</code>目录，执行`npm install`(由于仓库有一个`.gitignore`文件，里面默认是忽略掉`node_modules`文件夹的，也就是说仓库的hexo分支并没有存储该目录[也不需要]，所以需要install下)
+
+尽情地敲击键盘、挥洒笔墨吧！
+
 >* 编辑、撰写文章或其他博客更新改动
 >* 依次执行`git add .`、`git commit -m 'back up hexo files'`（引号内容可改）、`git push`指令，保证`xxx`分支版本最新
 >* 执行`hexo d -g`指令（在此之前，有时可能需要执行`hexo clean`），完成后就会发现，最新改动已经更新到`master`分支了，两个分支互不干扰！
 
-尽情地敲击键盘、挥洒笔墨吧！
 
 **注意**：每次**换电脑进行博客更新**时，不管上次在其他电脑有没有更新（就怕更新之后忘了），最好先`git pull`获取`xxx`分支的最新版本，之后再进行编辑和提交。
 
