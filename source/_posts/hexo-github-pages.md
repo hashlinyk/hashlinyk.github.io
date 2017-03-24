@@ -25,9 +25,9 @@ reward: true
 二、对username.github.io仓库新建分支，并克隆
 ---
 
-在Github的<code>*username*.github.io</code>仓库上新建一个`xxx`分支，并切换到该分支，并在该仓库->Settings->Branches->Default branch中将默认分支设为`xxx`，save保存；然后将该仓库克隆到本地，并进入该<code>*username*.github.io</code>文件目录。
+在Github的<code>*username*.github.io</code>仓库上新建一个`xxx`分支，并切换到该分支，并在该仓库->Settings->Branches->Default branch中将默认分支设为`xxx`，save保存；然后将该仓库克隆到本地，进入该<code>*username*.github.io</code>文件目录。
 
-完成上面步骤后，在当前目录使用`git branch`命令查看当前所在分支，应为新建的分支`xxx`：
+完成上面步骤后，在当前目录使用Git Bash执行`git branch`命令查看当前所在分支，应为新建的分支`xxx`：
 
 ```bash
 git branch
@@ -47,7 +47,7 @@ git branch
 四、提交xxx分支
 ---
 
-在<code>*username*.github.io</code>目录使用Git Bash执行`git add .`、`git commit -m 'back up hexo files'`（引号内容可改）、`git push`即可将博客的hexo部署环境提交到GitHub个人仓库的`xxx`分支了。
+执行`git add .`、`git commit -m 'back up hexo files'`（引号内容可改）、`git push`即可将博客的hexo部署环境提交到GitHub个人仓库的`xxx`分支。
 
 现在可以在GitHub上的<code>*username*.github.io</code>仓库看到两个分支的差异了。
 
