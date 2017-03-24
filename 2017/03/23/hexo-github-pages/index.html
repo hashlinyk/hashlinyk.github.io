@@ -6,17 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://pilgrimerick.github.io">
-  <title>Erick - 一枚WEB前端朝圣者</title>
+  <title>使用Hexo，如何在多台电脑上维护和更新github pages博客 | Erick - 一枚WEB前端朝圣者</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一个学习和分享的个人平台，专注web">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Erick - 一枚WEB前端朝圣者">
-<meta property="og:url" content="https://pilgrimerick.github.io/index.html">
+  <meta name="description" content="今天在公司用hexo搭好博客之后，突然有个疑问：我想要回到家继续写文章、更新博客，该怎么办呢？一个想法很快跳了出来：
+
+只要把公司本地博客根目录存着的source/_posts（文章所在目录）、_config.yml（博客配置文件）以及themes（主题文件目录）都备份一份（多种方式备份：使用U盘、网盘、GitHub仓库），待回到家之后重新hexo init，然后将备份的文件覆盖进去，再hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Hexo，如何在多台电脑上维护和更新github pages博客">
+<meta property="og:url" content="https://pilgrimerick.github.io/2017/03/23/hexo-github-pages/index.html">
 <meta property="og:site_name" content="Erick - 一枚WEB前端朝圣者">
-<meta property="og:description" content="一个学习和分享的个人平台，专注web">
+<meta property="og:description" content="今天在公司用hexo搭好博客之后，突然有个疑问：我想要回到家继续写文章、更新博客，该怎么办呢？一个想法很快跳了出来：
+
+只要把公司本地博客根目录存着的source/_posts（文章所在目录）、_config.yml（博客配置文件）以及themes（主题文件目录）都备份一份（多种方式备份：使用U盘、网盘、GitHub仓库），待回到家之后重新hexo init，然后将备份的文件覆盖进去，再hexo">
+<meta property="og:image" content="https://pilgrimerick.github.io/images/9U31M0VVJ.png">
+<meta property="og:updated_time" content="2017-03-24T01:26:45.800Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Erick - 一枚WEB前端朝圣者">
-<meta name="twitter:description" content="一个学习和分享的个人平台，专注web">
+<meta name="twitter:title" content="使用Hexo，如何在多台电脑上维护和更新github pages博客">
+<meta name="twitter:description" content="今天在公司用hexo搭好博客之后，突然有个疑问：我想要回到家继续写文章、更新博客，该怎么办呢？一个想法很快跳了出来：
+
+只要把公司本地博客根目录存着的source/_posts（文章所在目录）、_config.yml（博客配置文件）以及themes（主题文件目录）都备份一份（多种方式备份：使用U盘、网盘、GitHub仓库），待回到家之后重新hexo init，然后将备份的文件覆盖进去，再hexo">
+<meta name="twitter:image" content="https://pilgrimerick.github.io/images/9U31M0VVJ.png">
   
     <link rel="alternative" href="/atom.xml" title="Erick - 一枚WEB前端朝圣者" type="application/atom+xml">
   
@@ -148,16 +157,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-hexo-github-pages" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-hexo-github-pages" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/23/hexo-github-pages/">使用Hexo，如何在多台电脑上维护和更新github pages博客</a>
+    <h1 class="article-title" itemprop="name">
+      使用Hexo，如何在多台电脑上维护和更新github pages博客
     </h1>
   
 
@@ -175,11 +182,80 @@
 <p>只要把公司本地博客<strong>根目录</strong>存着的<code>source/_posts</code>（文章所在目录）、<code>_config.yml</code>（博客配置文件）以及<code>themes</code>（主题文件目录）都备份一份（多种方式备份：使用U盘、网盘、GitHub仓库），待回到家之后重新<code>hexo init</code>，然后将备份的文件覆盖进去，再<code>hexo d -g</code>，即可完成博客在另一台电脑的克隆。</p>
 </blockquote>
 <p>然而，这种方式的缺点也很明显，即多次备份，以使用U盘备份为例：</p>
-        
-          <a class="article-more-a" href="/2017/03/23/hexo-github-pages/#more">more >></a>
-        
+<a id="more"></a>
+<blockquote>
+<ul>
+<li>我在公司写了<code>文章A</code>并发布（deploy），到家后如果写了<code>文章B</code>，这时不能直接发布博客，因为家里的本地是没有<code>文章A</code>的，这时发布会造成博客上已发布的<code>文章A</code>丢失，因此就需要把<code>文章A的备份</code>拷进去；好，那就把备份拷进去，然后<code>hexo d -g</code>，OK，新<code>文章B</code>上去了,已发布的<code>文章A</code>也没丢。</li>
+<li>到上面为止，一切都还能接受。</li>
+<li>但如果我第二天在公司上班突然来了灵感，利用业余时间在公司写了<code>文章C</code>呢？我需要重复第一步，把备份的<code>文章B</code>拷到公司本地的博客文章目录中，然后重复……</li>
+</ul>
+</blockquote>
+<p>上面的例子是使用U盘备份，是一个比较极端的例子。更好的方法是新建另一个GitHub仓库保存备份整个hexo博客文件夹，每次更新不需要把U盘带来带去，也不需要<code>ctrl+c</code>、<code>ctrl+v</code>，而只需要<code>git pull</code>、<code>git push</code>，相当于每次在该仓库的最新版本上对博客进行维护更新，产生的新改动会在<code>hexo d -g</code>后于个人博客仓库生效。</p>
+<p>作为一名程序员，优雅应当是天性，即使使用另一个GitHub仓库进行备份我依然觉得不够优雅，能不能只在个人博客仓库上面就做到满足这个场景呢？</p>
+<p>于是我开始搜索资料，搜到了一个符合当前场景的解决方案，然而，试了该方案后，我悲哀的发现，这个解决方案已经过时了，不再符合当前的hexo版本<em>[注解1]</em>。</p>
+<p>但是，天无绝人之路，方案不能全盘照搬，但是核心思想却是可行的，我的思路一下子被打开了——可以使用git分支来解决！使用个人博客仓库的<code>master</code>分支来保存博客静态页面，使用另一个分支来保存hexo部署目录！</p>
+<p>话不多说，下面是我实践的方法：</p>
+<h2 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h2><p>开始本教程之前，请确保你已经使用hexo在github pages上面部署好你的个人博客，并在本地电脑拥有该博客的部署环境，即类似于以下图片的文件目录（博客根目录）：</p>
+<p><img src="/images/9U31M0VVJ.png" alt="hexo-github-pages博客部署环境文件目录"></p>
+<h2 id="二、对username-github-io仓库新建分支，并克隆"><a href="#二、对username-github-io仓库新建分支，并克隆" class="headerlink" title="二、对username.github.io仓库新建分支，并克隆"></a>二、对username.github.io仓库新建分支，并克隆</h2><p>有两种方式：</p>
+<ul>
+<li><p>先把<code><em>username</em>.github.io</code>克隆到本地，然后进入<code><em>username</em>.github.io</code>文件目录，在Git Bash中执行<code>git branch xxx</code>命令新建<code>xxx</code>分支，再使用<code>git checkout xxx</code>切换到该分支；</p>
+</li>
+<li><p>先在Github上可视化新建<code>xxx</code>分支，并切换到该分支，并在该仓库-&gt;Settings-&gt;Branches-&gt;Default branch中将默认分支设为<code>xxx</code>，save保存；然后将该仓库克隆到本地，并进入该<code><em>username</em>.github.io</code>文件目录。</p>
+</li>
+</ul>
+<p>上面两种方式只是顺序的差异，本质上没有区别，我采用的是后者。</p>
+<p>完成上面步骤后，在当前目录使用<code>git branch</code>命令查看当前所在分支，应为新建的分支<code>xxx</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git branch</div><div class="line">* xxx</div></pre></td></tr></table></figure>
+<h2 id="三、将本地博客的部署文件拷贝进username-github-io文件目录"><a href="#三、将本地博客的部署文件拷贝进username-github-io文件目录" class="headerlink" title="三、将本地博客的部署文件拷贝进username.github.io文件目录"></a>三、将本地博客的部署文件拷贝进username.github.io文件目录</h2><h2 id="四、提交xxx分支，并发布博客"><a href="#四、提交xxx分支，并发布博客" class="headerlink" title="四、提交xxx分支，并发布博客"></a>四、提交xxx分支，并发布博客</h2><h2 id="五、新电脑环境部署"><a href="#五、新电脑环境部署" class="headerlink" title="五、新电脑环境部署"></a>五、新电脑环境部署</h2><p>至此，你的博客已经可以在其他电脑上进行同步的维护和更新了，方法很简单：</p>
+<blockquote>
+<ul>
+<li>将新电脑的ssh key添加到GitHub账户上</li>
+<li>在新电脑上克隆<code><em>username</em>.github.io</code>仓库的<code>xxx</code>分支到本地</li>
+<li>在以上目录执行<code>npm install</code>(由于仓库会产生一个.gitignore文件，里面默认是忽略掉<code>node_modules</code>文件夹的，也就是说仓库的hexo分支并没有存储该目录，所以需要install下)</li>
+<li>写新文章</li>
+<li>执行本教程第四步：<strong>提交xxx分支，并发布博客</strong></li>
+</ul>
+</blockquote>
+<p>下次回到原来的电脑，再也不需要备份和拷贝了，只需要一次<code>git pull origin xxx</code>更新一下新电脑推送的最新版本，即可继续同步维护更新！</p>
+<h2 id="六、更加便捷：设置默认提交和更新的分支"><a href="#六、更加便捷：设置默认提交和更新的分支" class="headerlink" title="六、更加便捷：设置默认提交和更新的分支"></a>六、更加便捷：设置默认提交和更新的分支</h2><p>…<br><code>master</code>分支和<code>xxx</code>分支各自保存着一个版本，<code>master</code>分支用于保存博客静态资源，提供博客页面供人访问；<code>xxx</code>分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突，完美！</p>
+<blockquote>
+<p><em>[注解1]</em>：我百度到的旧版本解决方案见：<a href="https://www.zhihu.com/question/21193762" target="_blank" rel="external">使用hexo，如果换了电脑怎么更新博客？</a>，有兴趣可以看看</p>
+</blockquote>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>如果文章对你有帮助，不妨小小打赏一下！<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://cn.gravatar.com/userimage/109807169/4c06ac663fb5ed174811ef8d7f8fc07a.png?size=200">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="https://cn.gravatar.com/userimage/109807169/15f1efc943fabe7d4718d34d834ae1b6.png?size=200">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -199,10 +275,6 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/23/hexo-github-pages/">展开全文 >></a>
-        </p>
-      
 
       
       <div class="clearfix"></div>
@@ -210,7 +282,16 @@
   </div>
 </article>
 
-
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/03/23/js-event-loop/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【转载】JavaScript：彻底理解同步、异步和事件循环(Event Loop)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
 
 
@@ -218,141 +299,10 @@
 
 
   
-    <article id="post-js-event-loop" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/23/js-event-loop/">【转载】JavaScript：彻底理解同步、异步和事件循环(Event Loop)</a>
-    </h1>
+    <div class="duoshuo"></div>
   
 
-        
-        <a href="/2017/03/23/js-event-loop/" class="archive-article-date">
-  	<time datetime="2017-03-23T07:07:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一-单线程"><a href="#一-单线程" class="headerlink" title="一. 单线程"></a>一. 单线程</h2><p>我们常说“JavaScript是单线程的”。</p>
-<p>所谓单线程，是指在JS引擎中负责解释和执行JavaScript代码的线程只有一个。不妨叫它<strong>主线程</strong>。</p>
-<p>但是实际上还存在其他的线程。例如：处理AJAX请求的线程、处理DOM事件的线程、定时器线程、读写文件的线程(例如在Node.js中)等等。这些线程可能存在于JS引擎之内，也可能存在于JS引擎之外，在此我们不做区分。不妨叫它们<strong>工作线程</strong>。</p>
-        
-          <a class="article-more-a" href="/2017/03/23/js-event-loop/#more">more >></a>
-        
-      
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/23/js-event-loop/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/23/hello-world/">Hello My World</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/23/hello-world/" class="archive-article-date">
-  	<time datetime="2017-03-23T04:07:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>终于，强迫症尘埃落定，我最终决定个人博客域名就还是让<code>pilgrimErick</code>这个字符串来承担这个重任！！</p>
-        
-          <a class="article-more-a" href="/2017/03/23/hello-world/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/23/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-  
 
 
           </div>
@@ -374,8 +324,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
