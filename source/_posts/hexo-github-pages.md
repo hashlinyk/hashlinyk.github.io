@@ -84,8 +84,9 @@ git branch
 **注意**:每次**换电脑进行博客更新**时，如果上次在其他电脑有更新，此时都需要先`git pull`获取`xxx`分支的最新版本，之后再进行编辑和提交。
 
 
->*[注解1]*：我百度到的旧版本解决方案见：[使用hexo，如果换了电脑怎么更新博客？](https://www.zhihu.com/question/21193762)，有兴趣可以看看
 
 
->>PS：
->>转载请注明链接[http://linyk.me/2017/03/23/hexo-github-pages/](http://linyk.me/2017/03/23/hexo-github-pages/)
+
+>PS：
+>转载请注明链接[http://linyk.me/2017/03/23/hexo-github-pages/](http://linyk.me/2017/03/23/hexo-github-pages/)
+>>*[注解1]*：我百度到的旧版本解决方案见：[使用hexo，如果换了电脑怎么更新博客？](https://www.zhihu.com/question/21193762)，有兴趣可以看看
