@@ -77,4 +77,4 @@ git branch
 
 
 
->PS：转载请注明链接[http://linyk.me/2017/03/23/hexo-github-pages/](http://linyk.me/2017/03/23/hexo-github-pages/)
+>PS：转载请注明链接[http://linyk.me/2017/03/24/hexo-github-pages/](http://linyk.me/2017/03/24/hexo-github-pages/)
