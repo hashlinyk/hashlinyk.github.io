@@ -9,7 +9,7 @@ reward: true
 
 思路：**使用git分支**。
 
-即用个人博客仓库的`master`分支来保存博客静态页面，新建另一个分支来保存hexo部署环境目录！之后每次博客的更新就在新分支上编辑和发布（deploy），并把生成的博客页面推到`master`分支上。
+即用个人博客仓库的`master`分支来保存博客静态页面，新建另一个分支来保存hexo部署环境目录！之后每次博客的更新就在新分支上编辑和发布（deploy），把生成的博客页面推到`master`分支上。
 
 话不多说，下面是我实践的方法（前四步是在公司电脑上，第五步是家里的电脑）：
 
@@ -61,7 +61,7 @@ git branch
 >* 将新电脑的生成的ssh key添加到GitHub账户上
 >* 在新电脑上克隆<code>*username*.github.io</code>仓库的`xxx`分支到本地，此时本地git仓库处于`xxx`分支
 >* 切换到<code>*username*.github.io</code>目录，执行`npm install`(由于仓库有一个`.gitignore`文件，里面默认是忽略掉`node_modules`文件夹的，也就是说仓库的hexo分支并没有存储该目录[也不需要]，所以需要install下)
->* 写新文章
+>* 编辑、撰写文章或其他博客更新改动
 >* 依次执行`git add .`、`git commit -m 'back up hexo files'`（引号内容可改）、`git push`指令，保证`xxx`分支版本最新
 >* 执行`hexo d -g`指令（在此之前，有时可能需要执行`hexo clean`），完成后就会发现，最新改动已经更新到`master`分支了，两个分支互不干扰！
 
