@@ -5,7 +5,6 @@ tags: hexo
 reward: true
 ---
 
-123
 今天在公司用hexo搭好博客之后，突然有个疑问：我想要回到家继续写文章、更新博客，该怎么办呢？一个想法很快跳了出来：
 
 >只要把公司本地博客**根目录**存着的`source/_posts`（文章所在目录）、`_config.yml`（博客配置文件）以及`themes`（主题文件目录）都备份一份（多种方式备份：使用U盘、网盘、GitHub仓库），待回到家之后重新`hexo init`，然后将备份的文件覆盖进去，再`hexo d -g`，即可完成博客在另一台电脑的克隆。
@@ -58,7 +57,7 @@ git branch
 三、将本地博客的部署文件拷贝进username.github.io文件目录
 ---
 
-如题，先将本地博客的部署文件拷贝进username.github.io文件目录。
+如题，先将本地博客的部署文件全部拷贝进username.github.io文件目录。
 
 接下来，将拷贝进来的博客hexo部署环境提交到xxx分支，提交之前需注意：
 
@@ -70,6 +69,9 @@ git branch
 
 在<code>*username*.github.io</code>目录使用Git Bash执行`git add .`、`git commit -m 'back up hexo files'`（引号内容可改）、`git push origin xxx`即可将博客的hexo部署环境提交到GitHub个人仓库的`xxx`分支了。
 
+现在可以在GitHub上的<code>*username*.github.io</code>仓库看到两个分支的差异了。
+
+`master`分支和`xxx`分支各自保存着一个版本，`master`分支用于保存博客静态资源，提供博客页面供人访问；`xxx`分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突，完美！
 
 五、新电脑环境部署
 ---
@@ -77,14 +79,15 @@ git branch
 至此，你的博客已经可以在其他电脑上进行同步的维护和更新了，方法很简单：
 
 >* 将新电脑的生成的ssh key添加到GitHub账户上
->* 在新电脑上克隆<code>*username*.github.io</code>仓库的`xxx`分支到本地
->* 在以上目录执行`npm install`(由于仓库有一个`.gitignore`文件，里面默认是忽略掉`node_modules`文件夹的，也就是说仓库的hexo分支并没有存储该目录[也不需要]，所以需要install下)
+>* 在新电脑上克隆<code>*username*.github.io</code>仓库的`xxx`分支到本地，此时本地git仓库处于`xxx`分支
+>* 切换到<code>*username*.github.io</code>目录，执行`npm install`(由于仓库有一个`.gitignore`文件，里面默认是忽略掉`node_modules`文件夹的，也就是说仓库的hexo分支并没有存储该目录[也不需要]，所以需要install下)
 >* 写新文章
->* 执行`hexo d -g`指令，完成后就会发现，最新改动已经更新到`master`分支了，两个分支互不干扰！
+>* 执行本教程第四步：*提交xxx分支*,保证分支版本最新
+>* 执行`hexo d -g`指令（在此之前，有时可能需要执行`hexo clean`），完成后就会发现，最新改动已经更新到`master`分支了，两个分支互不干扰！
 
 下次回到原来的电脑，再也不需要备份和拷贝了，只需要一次`git pull origin xxx`更新一下新电脑推送的最新版本，即可继续同步维护更新！
 
-`master`分支和`xxx`分支各自保存着一个版本，`master`分支用于保存博客静态资源，提供博客页面供人访问；`xxx`分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突，完美！
+
 
 六、更加完美：设置默认分支
 ---
