@@ -37,9 +37,9 @@ git branch
 三、将本地博客的部署文件拷贝进username.github.io文件目录
 ---
 
-如题，先将本地博客的部署文件全部拷贝进username.github.io文件目录。
+如题，先将本地博客的部署文件全部拷贝进<code>*username*.github.io</code>文件目录。
 
-接下来，将拷贝进来的博客hexo部署环境提交到xxx分支，提交之前需注意：
+接下来，将拷贝进来的博客hexo部署环境提交到`xxx`分支，提交之前需注意：
 
 >* 将`themes`目录以内中的主题的`.git`目录删除（如果有），因为一个git仓库中不能包含另一个git仓库，提交主题文件夹会失败。
 >* 可能有人会问，删除了`themes`目录中的`.git`不就不能`git pull`更新主题了吗，很简单，需要更新主题时在另一个地方`git clone`下来该主题的最新版本，然后将内容拷到当前主题目录即可
@@ -62,12 +62,12 @@ git branch
 >* 在新电脑上克隆<code>*username*.github.io</code>仓库的`xxx`分支到本地，此时本地git仓库处于`xxx`分支
 >* 切换到<code>*username*.github.io</code>目录，执行`npm install`(由于仓库有一个`.gitignore`文件，里面默认是忽略掉`node_modules`文件夹的，也就是说仓库的hexo分支并没有存储该目录[也不需要]，所以需要install下)
 >* 写新文章
->* 执行本教程第四步：**提交xxx分支**,即依次执行`git add .`、`git commit -m 'back up hexo files'`（引号内容可改）、`git push`指令，保证分支版本最新
+>* 依次执行`git add .`、`git commit -m 'back up hexo files'`（引号内容可改）、`git push`指令，保证`xxx`分支版本最新
 >* 执行`hexo d -g`指令（在此之前，有时可能需要执行`hexo clean`），完成后就会发现，最新改动已经更新到`master`分支了，两个分支互不干扰！
 
 尽情地敲击键盘、挥洒笔墨吧！
 
-**注意**：每次**换电脑进行博客更新**时，如果上次在其他电脑有更新，此时都需要先`git pull`获取`xxx`分支的最新版本，之后再进行编辑和提交。
+**注意**：每次**换电脑进行博客更新**时，不管上次在其他电脑有没有更新（就怕更新之后忘了），最好先`git pull`获取`xxx`分支的最新版本，之后再进行编辑和提交。
 
 
 
