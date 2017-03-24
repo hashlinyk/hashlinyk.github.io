@@ -87,6 +87,6 @@ git branch
 
 
 
->PS：
->转载请注明链接[http://linyk.me/2017/03/23/hexo-github-pages/](http://linyk.me/2017/03/23/hexo-github-pages/)
+>PS：转载请注明链接[http://linyk.me/2017/03/23/hexo-github-pages/](http://linyk.me/2017/03/23/hexo-github-pages/)
+>*注解*：
 >>*[注解1]*：我百度到的旧版本解决方案见：[使用hexo，如果换了电脑怎么更新博客？](https://www.zhihu.com/question/21193762)，有兴趣可以看看
