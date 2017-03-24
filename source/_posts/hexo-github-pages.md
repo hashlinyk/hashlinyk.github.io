@@ -89,18 +89,9 @@ git branch
 
 注意每次**换电脑进行博客更新**时，如果上次在其他电脑有更新，此时都需要先`pull`获取最新版本，之后再进行编辑和提交。
 
-六、更加完美：设置默认分支
----
-
-以上已经很完美了，但还不够尽善尽美！
-
-因为我们平时更新博客，并不需要手动在`master`分支上进行git操作，只需要`hexo d -g`一把，即可完成博客更新。
-
-也就是说，我们是不会用到`master`分支的，那就可以把每次`git push origin xxx`和`git pull origin xxx`中的分支`origin xxx`省去，直接将`xxx`设为默认分支，即只使用`git push`和`git pull`指令，多么令人愉悦的操作！
-
-那么如何设置默认分支呢？
-
-123
-
 
 >*[注解1]*：我百度到的旧版本解决方案见：[使用hexo，如果换了电脑怎么更新博客？](https://www.zhihu.com/question/21193762)，有兴趣可以看看
+
+
+>PS：
+>>转载请注明链接[http://linyk.me/2017/03/23/hexo-github-pages/](http://linyk.me/2017/03/23/hexo-github-pages/)
