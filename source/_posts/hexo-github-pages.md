@@ -82,12 +82,12 @@ git branch
 >* 在新电脑上克隆<code>*username*.github.io</code>仓库的`xxx`分支到本地，此时本地git仓库处于`xxx`分支
 >* 切换到<code>*username*.github.io</code>目录，执行`npm install`(由于仓库有一个`.gitignore`文件，里面默认是忽略掉`node_modules`文件夹的，也就是说仓库的hexo分支并没有存储该目录[也不需要]，所以需要install下)
 >* 写新文章
->* 执行本教程第四步：*提交xxx分支*,保证分支版本最新
+>* 执行本教程第四步：**提交xxx分支**,保证分支版本最新
 >* 执行`hexo d -g`指令（在此之前，有时可能需要执行`hexo clean`），完成后就会发现，最新改动已经更新到`master`分支了，两个分支互不干扰！
 
 下次回到原来的电脑，再也不需要备份和拷贝了，只需要一次`git pull origin xxx`更新一下新电脑推送的最新版本，即可继续同步维护更新！
 
-
+注意每次**换电脑进行博客更新**时，都需要先`pull`再`push`和`deploy`。
 
 六、更加完美：设置默认分支
 ---
