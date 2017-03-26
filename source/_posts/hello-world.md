@@ -14,3 +14,6 @@ reward: false
 我感到前所未有的自由~~
 
 然而，我是个懒人，能坚持更新吗？坚持多久呢？嘛，谁也说不清楚，有灵感就会来这儿划上一笔的！
+
+
+> PS：本博客当前使用的是 [litten](https://github.com/litten) 提供的 [yilia](https://github.com/litten/hexo-theme-yilia) 主题，这个风格我很喜欢，特此感谢！
