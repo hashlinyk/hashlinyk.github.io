@@ -3,16 +3,16 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Erick - 一枚WEB前端朝圣者
+title: Erick的博客
 subtitle: 兴趣引领生活，专注WEB前端
-description: 一个学习、分享和沉淀的个人博客，专注web前端技术
+description: Erick的博客，一个学习、分享和沉淀的个人技术空间，专注web前端技术
 author: Erick
 language: zh-cn
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://pilgrimerick.github.io
+url: https://linyk.me
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
