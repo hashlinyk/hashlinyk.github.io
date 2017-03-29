@@ -105,7 +105,23 @@ $ npm install --save-dev babel-cli
 
 babel 6除了babel-cli模块之外，还有另一个模块babel-core，如果不清楚可以参见：[babel-cli和babel-core的用法和区别](/)， 我们只需要用到babel-cli。
 
-为了babel能够编译ES6，还需要安装`babel-preset-es2015`预设，执行以下命令：
+Babel 6官方推荐**本地安装**babel-cli，而不是全局安装，所以我们不能直接在该目录的命令行下使用`babel`命令，不过可以在`package.json`中这样：
+
+```javascript
+{
+    "script":{
+        "build": "babel app.js -o main.js"
+    }
+}
+```
+
+* `-o`表示--out-file，即输出文件，上述指令表示使用babel将app.js编译输出到ES5语法的main.js文件（不存在则自动创建）。
+
+
+然后使用`npm run build`命令即可将`app.js`编译为`main.js`.
+
+
+上述编译其实并没有进行，而是原样输出。为了babel能够编译ES6，还需要安装`babel-preset-es2015`预设，执行以下命令：
 
 ```bash
 $ npm install --save-dev babel-preset-es2015
@@ -150,10 +166,8 @@ log();
 在项目根目录命令行执行：
 
 ```bash
-$ babel app.js -o main.js
+$ npm run build
 ```
-
-* `-o`表示--out-file，即输出文件，上述指令表示使用babel将app.js编译输出到ES5语法的main.js文件（不存在则自动创建）。
 
 完成后可看到项目根目录生成了一个名为`main.js`的文件，其内容为：
 
@@ -240,7 +254,7 @@ $ npm install --save-dev react react-dom
 **其实熟练之后上述安装可以一步完成**，即执行：
 
 ```bash
-$ npm install --save-dev react react-dom babel-preset-es2015 babel-preset-react babel-polyfill
+$ npm install --save-dev react react-dom babel-cli babel-preset-es2015 babel-preset-react babel-polyfill
 ```
 
 那么现在，就让我们跑一下一个简单的`React Demo`吧：
