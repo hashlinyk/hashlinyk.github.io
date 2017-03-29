@@ -28,9 +28,9 @@ var Person = React.createClass({//类名一定要大写开头
     render: function() {
         return (
             <div>
-                <p>姓名：this.props.name</p>
-                <p>性别：this.props.sex</p>
-                <p>年龄：this.props.age</p>
+                <p>姓名：{this.props.name}</p>
+                <p>性别：{this.props.sex}</p>
+                <p>年龄：{this.props.age}</p>
             </div>
        );
     }
@@ -51,9 +51,9 @@ class Person extends React.Component{
     render() {//开头花括号一定要和小括号隔一个空格，否则识别不出来
         return (
             <div>
-                <p>姓名：this.props.name</p>
-                <p>性别：this.props.sex</p>
-                <p>年龄：this.props.age</p>
+                <p>姓名：{this.props.name}</p>
+                <p>性别：{this.props.sex}</p>
+                <p>年龄：{this.props.age}</p>
             </div>    
         );
     }
@@ -131,7 +131,6 @@ $ npm install --save-dev babel-preset-es2015
 $ npm install --save babel-polyfill
 ```
 
-
 现在，就可以使用babel尽情地转码ES6了。
 
 首先在项目根目录新建一个`app.js`（名字任取），内容如下：
@@ -148,14 +147,11 @@ export default log;
 log();
 ```
 
-在项目根目录命令行依次执行：
+在项目根目录命令行执行：
 
 ```bash
-$ mkdir build
 $ babel app.js -o main.js
 ```
-
-* `mkdir build`表示新建一个空文件夹，名为`build`。
 
 * `-o`表示--out-file，即输出文件，上述指令表示使用babel将app.js编译输出到ES5语法的main.js文件（不存在则自动创建）。
 
@@ -190,7 +186,6 @@ $ node main.js
 
 顺利执行，表明转码成功。做到这一步，表明我们可以对React项目的ES6语法进行编译输出了。
 
-
 然而这还不足以进行React的学习，还记得前面提到的`JSX`语法吗？再次看这段代码：
 
 ```javascript
@@ -202,9 +197,9 @@ class Person extends React.Component{
     render() {//开头花括号一定要和小括号隔一个空格，否则识别不出来
         return (
             <div>
-                <p>姓名：this.props.name</p>
-                <p>性别：this.props.sex</p>
-                <p>年龄：this.props.age</p>
+                <p>姓名：{this.props.name}</p>
+                <p>性别：{this.props.sex}</p>
+                <p>年龄：{this.props.age}</p>
             </div>    
         );
     }
@@ -261,7 +256,7 @@ $ npm install --save-dev react react-dom babel-preset-es2015 babel-preset-react
     <body>
         <div id="app"></div>
 
-        <script src="build/main.js"></script>
+        <script src="main.js"></script>
     </body>
     </html>
 ```
@@ -277,9 +272,9 @@ class Person extends React.Component{
     render() {//开头花括号一定要和小括号隔一个空格，否则识别不出来
         return (
             <div>
-                <p>姓名：this.props.name</p>
-                <p>性别：this.props.sex</p>
-                <p>年龄：this.props.age</p>
+                <p>姓名：{this.props.name}</p>
+                <p>性别：{this.props.sex}</p>
+                <p>年龄：{this.props.age}</p>
             </div>    
         );
     }
@@ -291,4 +286,23 @@ ReactDOM.render(
 );       
 ```
 
+
+然后在浏览器查看`/index.html`，然后......就会发现：报错了！以下是F12 console控制台打印：
+
+```javascript
+main.js:5 Uncaught ReferenceError: require is not defined
+```
+
+提示`require没有定义`，到这里，是不是想到什么了？
+
+没错，这里的`require`并不是Javascript的原生实现，而是Node.js对于CommonJS模块化规范的实现！浏览器是不认识它的。
+
+这时我们就需要另一个工具了：Webpack。将依赖全部导入到`main.js`中，打包输出！
+
+三、Webpack
+---
+
+你能看到这里，忍受上面这么多的长篇大论，说明你实在是一位大毅力者，给你点赞！
+
+这一节之后，接下来就是React主场了，所以还请再耐心片刻，先听我说说Webpack是个什么玩意儿。
 
