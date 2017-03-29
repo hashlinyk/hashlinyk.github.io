@@ -310,7 +310,7 @@ $ npm run build
 然后在浏览器查看`/index.html`，然后......就会发现：报错了！以下是F12 console控制台打印：
 
 ```javascript
-main.js:5 Uncaught ReferenceError: require is not defined
+Uncaught ReferenceError: require is not defined
 ```
 
 提示`require没有定义`，到这里，是不是想到什么了？
