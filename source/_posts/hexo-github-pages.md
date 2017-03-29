@@ -32,8 +32,8 @@ reward: true
 完成上面步骤后，在当前目录使用Git Bash执行`git branch`命令查看当前所在分支，应为新建的分支`xxx`：
 
 ```bash
-git branch
-* xxx
+$ git branch
+*xxx
 ```
 
 三、将本地博客的部署文件拷贝进username.github.io文件目录

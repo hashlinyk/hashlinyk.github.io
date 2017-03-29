@@ -2,6 +2,7 @@
 title: React入门（一）-循序渐进学习ES6 + Webpack + React
 date: 2017-03-29 09:22:51
 tags: [react,笔记]
+reward: true
 ---
 
 全文将主要涉及到：ES6、npm、Babel、Webpack、JSX、React等名词，如果有不认识的，别担心，但请先做好心理准备。
