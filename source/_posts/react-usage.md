@@ -211,7 +211,7 @@ ReactDOM.render(
 );       
 ```
 
-Javascript中直接写HTML，很奇特的写法，这就是[**JSX**语法](http://www.runoob.com/react/react-jsx.html)。
+Javascript中直接写HTML，很奇特的写法，这就是[**JSX**语法](http://www.runoob.com/react/react-jsx.html)（可以先不用管它，后面讲React会解释一遍）。
 
 因此，除了使用`babel-preset-es2015`来转换ES6代码外，还需要引入`babel-preset-react`来转换JSX代码。执行以下命令：
 
@@ -237,10 +237,10 @@ $ npm install --save-dev babel-preset-react
 $ npm install --save-dev react react-dom
 ```
 
-其实熟练之后上述安装可以一步完成，即执行：
+**其实熟练之后上述安装可以一步完成**，即执行：
 
 ```bash
-$ npm install --save-dev react react-dom babel-preset-es2015 babel-preset-react
+$ npm install --save-dev react react-dom babel-preset-es2015 babel-preset-react babel-polyfill
 ```
 
 那么现在，就让我们跑一下一个简单的`React Demo`吧：
@@ -265,6 +265,7 @@ $ npm install --save-dev react react-dom babel-preset-es2015 babel-preset-react
 
 ```javascript
 //ES6
+import 'babel-polyfill';    //可按需选择是否加载
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -295,9 +296,9 @@ main.js:5 Uncaught ReferenceError: require is not defined
 
 提示`require没有定义`，到这里，是不是想到什么了？
 
-没错，这里的`require`并不是Javascript的原生实现，而是Node.js对于CommonJS模块化规范的实现！浏览器是不认识它的。
+没错，这里的`require`并不是Javascript的原生实现，而是node.js对于CommonJS模块化规范的实现！浏览器是不认识它的。
 
-这时我们就需要另一个工具了：Webpack。将依赖全部导入到`main.js`中，打包输出！
+这时我们就需要另一个工具了：Webpack。去掉require，将依赖全部导入到`main.js`中，打包输出！
 
 三、Webpack
 ---
