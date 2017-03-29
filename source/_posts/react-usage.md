@@ -152,7 +152,7 @@ log();
 $ babel app.js -o main.js
 ```
 
-`-o`表示--out-file，即输出文件，上述指令表示使用babel将app.js编译为ES5语法的main.js。
+`-o`表示--out-file，即输出文件，上述指令表示使用babel将app.js编译输出到ES5语法的main.js文件（不存在则自动创建）。
 
 完成后可看到项目根目录生成了一个名为`main.js`的文件，其内容为：
 
@@ -176,14 +176,12 @@ exports.default = log;
 log();
 ```
 
-让我们看看效果。
-
-在命令行中执行直接执行`main.js`，顺利执行：
+让我们看看效果。在命令行中执行直接执行`main.js`：
 
 ```bash
 $ node main.js
 [Function: from]
 ```
 
-表明转码成功！
+顺利执行，表明转码成功！
 
