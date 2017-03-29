@@ -304,7 +304,7 @@ ReactDOM.render(
 再次执行命令编译`app.js`:
 
 ```bash
-$ babel app.js -o main.js
+$ npm run build
 ```
 
 然后在浏览器查看`/index.html`，然后......就会发现：报错了！以下是F12 console控制台打印：
@@ -317,7 +317,7 @@ main.js:5 Uncaught ReferenceError: require is not defined
 
 没错，这里的`require`并不是Javascript的原生实现，而是node.js对于CommonJS模块化规范的实现！浏览器是不认识它的。
 
-这时我们就需要另一个工具了：Webpack。去掉require，将依赖全部导入到`main.js`中，打包输出！
+这时我们就需要另一个工具了：Webpack！去掉require，将依赖全部导入到`main.js`中，打包输出！
 
 三、Webpack
 ---
