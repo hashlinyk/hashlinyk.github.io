@@ -22,6 +22,7 @@ React项目可以采用两种Javascript语法版本中的一种进行编写：ES
 ```javascript
 //ES5
 var React = require('react');
+var ReactDOM = require('react-dom');
 
 var Person = React.createClass({//类名一定要大写开头
     render: function() {
@@ -44,6 +45,7 @@ ReactDOM.render(
 ```javascript
 //ES6
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 class Person extends React.Component{
     render() {//开头花括号一定要和小括号隔一个空格，否则识别不出来
@@ -117,7 +119,7 @@ $ npm install --save-dev babel-preset-es2015
 }
 ```
 
-上面的配置表示babel转码时使用的规则是`es2015`（babel不止可以转es6，所以也有别的预设如`babel-preset-react`，用于编译React所用到的`JSX`语法，此处内容将在下节展开）。
+上面的配置表示babel转码时使用的规则是`es2015`（babel不止可以转es6，所以也有别的预设如`babel-preset-react`，用于编译React所用到的`JSX`语法，此处内容将在后文展开）。
 
 **注意**：Babel默认只转换新的JavaScript句法（syntax），而不转换新的API，比如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象，以及一些定义在全局对象上的方法（比如Object.assign）都不会转码。
 
@@ -146,13 +148,16 @@ export default log;
 log();
 ```
 
-在该目录命令行执行：
+在项目根目录命令行依次执行：
 
 ```bash
+$ mkdir build
 $ babel app.js -o main.js
 ```
 
-`-o`表示--out-file，即输出文件，上述指令表示使用babel将app.js编译输出到ES5语法的main.js文件（不存在则自动创建）。
+* `mkdir build`表示新建一个空文件夹，名为`build`。
+
+* `-o`表示--out-file，即输出文件，上述指令表示使用babel将app.js编译输出到ES5语法的main.js文件（不存在则自动创建）。
 
 完成后可看到项目根目录生成了一个名为`main.js`的文件，其内容为：
 
@@ -183,5 +188,107 @@ $ node main.js
 [Function: from]
 ```
 
-顺利执行，表明转码成功！
+顺利执行，表明转码成功。做到这一步，表明我们可以对React项目的ES6语法进行编译输出了。
+
+
+然而这还不足以进行React的学习，还记得前面提到的`JSX`语法吗？再次看这段代码：
+
+```javascript
+//ES6
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class Person extends React.Component{
+    render() {//开头花括号一定要和小括号隔一个空格，否则识别不出来
+        return (
+            <div>
+                <p>姓名：this.props.name</p>
+                <p>性别：this.props.sex</p>
+                <p>年龄：this.props.age</p>
+            </div>    
+        );
+    }
+} 
+
+ReactDOM.render(
+    <Person name='Erick' sex='male' age='23' />,
+     document.getElementById('app')
+);       
+```
+
+Javascript中直接写HTML，很奇特的写法，这就是[**JSX**语法](http://www.runoob.com/react/react-jsx.html)。
+
+因此，除了使用`babel-preset-es2015`来转换ES6代码外，还需要引入`babel-preset-react`来转换JSX代码。执行以下命令：
+
+```bash
+$ npm install --save-dev babel-preset-react
+```
+
+然后修改`.babelrc`文件内容为：
+
+```javascript
+{
+    "presets": ["es2015","react"]
+}
+```
+
+现在Babel可以转码ES6和JSX了，已经迫不及待想要看看效果了！
+
+但是，我们还缺最关键的一步：安装react...
+
+安装react也很简单，执行以下命令：
+
+```bash
+$ npm install --save-dev react react-dom
+```
+
+其实熟练之后上述安装可以一步完成，即执行：
+
+```bash
+$ npm install --save-dev react react-dom babel-preset-es2015 babel-preset-react
+```
+
+那么现在，就让我们跑一下一个简单的`React Demo`吧：
+
+* **/index.html**
+
+```html
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script src="build/main.js"></script>
+    </body>
+    </html>
+```
+
+* **/app.js**
+
+```javascript
+//ES6
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class Person extends React.Component{
+    render() {//开头花括号一定要和小括号隔一个空格，否则识别不出来
+        return (
+            <div>
+                <p>姓名：this.props.name</p>
+                <p>性别：this.props.sex</p>
+                <p>年龄：this.props.age</p>
+            </div>    
+        );
+    }
+} 
+
+ReactDOM.render(
+    <Person name='Erick' sex='male' age='23' />,
+     document.getElementById('app')
+);       
+```
+
 
