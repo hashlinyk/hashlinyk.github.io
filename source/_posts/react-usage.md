@@ -287,6 +287,11 @@ ReactDOM.render(
 );       
 ```
 
+再次执行命令编译`app.js`:
+
+```bash
+$ babel app.js -o main.js
+```
 
 然后在浏览器查看`/index.html`，然后......就会发现：报错了！以下是F12 console控制台打印：
 
