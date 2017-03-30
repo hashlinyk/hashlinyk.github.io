@@ -20,6 +20,8 @@ React项目可以采用两种Javascript语法版本中的一种进行编写：ES
 
 <!-- more -->
 
+* **ES5写法**
+
 ```javascript
 //ES5
 var React = require('react');
@@ -42,6 +44,8 @@ ReactDOM.render(
      document.getElementById('app')
 );
 ```
+
+* **ES6写法**
 
 ```javascript
 //ES6
@@ -92,7 +96,7 @@ ReactDOM.render(
 
 所以，我们使用第二种方式来安装Babel，进行React学习的准备工作，我们使用[Babel 6](http://www.csdn.net/article/2015-11-17/2826233)。
 
-新建一个目录，打开命令行，执行（首先应具有`node.js环境`）：
+新建一个目录，打开命令行，执行（前提已经安装了`node.js`环境）：
 
 ```bash
 $ npm init
@@ -106,7 +110,7 @@ $ npm init
 $ npm install --save-dev babel-cli  
 ```
 
-babel 6除了babel-cli模块之外，还有另一个模块babel-core，如果不清楚可以参见：[babel-cli和babel-core的用法和区别](/)， 我们只需要用到babel-cli。
+babel 6除了babel-cli模块之外，还有另一个模块babel-core，如果不清楚可以参见：[babel-cli和babel-core的用法和区别](/)， 我们这里用babel-cli。
 
 Babel 6官方推荐**本地安装**babel-cli，而不是全局安装，所以我们不能直接在该目录的命令行下使用`babel`命令，不过可以在`package.json`中这样：
 
@@ -322,20 +326,22 @@ Uncaught ReferenceError: require is not defined
 
 这时我们就需要另一个工具了：Webpack！去掉require，将依赖全部导入到`main.js`中，打包成一个文件输出！
 
-三、Webpack
+三、Webpack + React
 ---
 
 如果你是一步步看到这里，忍受上面这么多的长篇大论，说明你实在是一位大毅力者，给你点赞！
 
-这一节之后，接下来就是React主场了，所以还请再耐心片刻，先我们先进行Webpack相关配置，如需了解Webpack请戳：[Webpack使用指南](/)。
+这一节之后，接下来就是React主场了，所以还请再耐心片刻，我们先进行Webpack相关配置，如需了解Webpack请戳：[Webpack使用指南](/)。
 
-Webpack本身只负责依赖模块管理和打包，那该如何与Babel搭配使用呢？万幸，Webpack有个叫做“Loader”的东西，可以用来对资源模块进行打包前的处理。例如，`babel-loader`就可以在打包前将`ES6`和`JSX`语法代码转为ES5代码，再打包输出到一个文件中去，我们使用的就是`babel-loader`。
+Webpack本身只负责依赖模块管理和打包，那该如何与Babel搭配使用呢？
 
-也就是说，我们前面的Babel介绍其实原本就是非必须的！
+万幸，Webpack有个叫做“Loader”的东西，可以用来对资源模块进行打包前的处理。例如，`babel-loader`就可以在打包前将`ES6`和`JSX`语法代码转为ES5代码，再打包输出到一个文件中去，我们使用的就是`babel-loader`。
+
+也就是说，我们前面一节的“Babel介绍”其实是非必须的！
 
 等等，等等......别打我......XD
 
-好吧，前面一节的内容更多的是理解Babel的使用原理，接下来我们只要使用`Webpack + babel-loader + react`就可以了。
+好吧，前面一节的内容更多的是理解Babel的使用方法，接下来我们只要使用`Webpack + babel-loader + react`就可以了。
 
 让我们“**重新开始**”吧：
 
@@ -378,7 +384,7 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 loader: "babel",
                 query: {
-                    presets: ['es2015']
+                    presets: ['es2015','react']
                 }
             }
         ]
@@ -432,7 +438,7 @@ ReactDOM.render(
 
 配置完成！让我们试试吧。
 
-命令行执行
+命令行执行`webpack`
 
 ```bash
 $ webpack
@@ -450,4 +456,4 @@ main.js  998 kB       0  [emitted]  main
 
 ![ES6 + Webpack + React循序渐进Demo](/images/webpack_react_demo.png)
 
-现在我们终于把一个简单的`React Demo`跑起来了，那么就让我们开始正式进入到主题中，开始[react学习之路](http://linyk.me/)吧！
+现在我们终于把一个简单的React Demo跑起来了，那么就让我们开始正式进入到主题中，开始[react学习之路](http://linyk.me/)吧！
