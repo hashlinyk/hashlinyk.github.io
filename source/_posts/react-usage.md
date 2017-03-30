@@ -1,5 +1,5 @@
 ---
-title: React入门（一）-循序渐进学习ES6 + Webpack + React
+title: React入门：循序渐进学习ES6 + Webpack + React
 date: 2017-03-29 09:22:51
 tags: [react,笔记]
 reward: true
@@ -74,6 +74,8 @@ ReactDOM.render(
 二、Babel介绍
 --------------
 
+* **提示**：如果你对Babel有所了解或较为熟悉，可以快速浏览或直接跳过本节。
+
 不管是ES5还是ES6，我们最终的代码肯定是在浏览器上跑的，所以最终输出到页面中的代码必须要求是ES5语法的版本，才能满足浏览器兼容性。
 
 现在我们使用ES6，那么该如何将ES6转化为ES5代码呢？
@@ -128,7 +130,7 @@ Babel 6官方推荐**本地安装**babel-cli，而不是全局安装，所以我
 $ npm install --save-dev babel-preset-es2015
 ```
 
-只要使用babel，都需要在项目根目录创建一个`.babelrc`配置文件，当前其内容应填写：
+只要使用babel-cli，都需要在项目目录创建一个`.babelrc`配置文件，当前其内容应填写：
 
 ```javascript
 {
@@ -150,7 +152,7 @@ $ npm install --save babel-polyfill
 
 现在，就可以使用babel尽情地转码ES6了。
 
-首先在项目根目录新建一个`app.js`（名字任取），内容如下：
+首先在项目目录新建一个`app.js`（名字任取），内容如下：
 
 ```javascript
 import 'babel-polyfill';        //为了能够最后在浏览器正常运行ES6新增的Array.from方法，需要加载babel-polyfill
@@ -164,13 +166,13 @@ export default log;
 log();
 ```
 
-在项目根目录命令行执行：
+在项目目录命令行执行：
 
 ```bash
 $ npm run build
 ```
 
-完成后可看到项目根目录生成了一个名为`main.js`的文件，其内容为：
+完成后可看到项目目录生成了一个名为`main.js`的文件，其内容为：
 
 ```javascript
 'use strict';
@@ -252,7 +254,7 @@ $ npm install --save-dev babel-preset-react
 $ npm install --save-dev react react-dom
 ```
 
-**其实熟练之后上述安装可以一步完成**，即执行：
+**其实追求简单上述安装可以一步完成**，即执行：
 
 ```bash
 $ npm install --save-dev react react-dom babel-cli babel-preset-es2015 babel-preset-react babel-polyfill
@@ -318,12 +320,134 @@ Uncaught ReferenceError: require is not defined
 
 没错，这里的`require`并不是Javascript的原生实现，而是node.js对于CommonJS模块化规范的实现！浏览器是不认识它的。
 
-这时我们就需要另一个工具了：Webpack！去掉require，将依赖全部导入到`main.js`中，打包输出！
+这时我们就需要另一个工具了：Webpack！去掉require，将依赖全部导入到`main.js`中，打包成一个文件输出！
 
 三、Webpack
 ---
 
-你能看到这里，忍受上面这么多的长篇大论，说明你实在是一位大毅力者，给你点赞！
+如果你是一步步看到这里，忍受上面这么多的长篇大论，说明你实在是一位大毅力者，给你点赞！
 
-这一节之后，接下来就是React主场了，所以还请再耐心片刻，先听我说说Webpack是个什么玩意儿。
+这一节之后，接下来就是React主场了，所以还请再耐心片刻，先我们先进行Webpack相关配置，如需了解Webpack请戳：[Webpack使用指南](/)。
 
+Webpack本身只负责依赖模块管理和打包，那该如何与Babel搭配使用呢？万幸，Webpack有个叫做“Loader”的东西，可以用来对资源模块进行打包前的处理。例如，`babel-loader`就可以在打包前将`ES6`和`JSX`语法代码转为ES5代码，再打包输出到一个文件中去，我们使用的就是`babel-loader`。
+
+也就是说，我们前面的Babel介绍其实原本就是非必须的！
+
+等等，等等......别打我......XD
+
+好吧，前面一节的内容更多的是理解Babel的使用原理，接下来我们只要使用`Webpack + babel-loader + react`就可以了。
+
+让我们“**重新开始**”吧：
+
+清空项目目录，打开命令行，依次执行以下步骤:
+
+* 全局安装 `webpack`
+
+```bash
+$ npm install -g webpack
+```
+
+
+* `npm init`生成`package.json`文件
+
+```bash
+$ npm init
+```
+
+* 本地安装依赖模块
+
+```bash
+$ npm install --save-dev react react-dom babel-core babel-loader babel-preset-es2015 babel-preset-react babel-polyfill
+```
+    
+* 新建/`webpack.config.js`文件，内容如下
+
+```javascript
+module.exports = {
+    entry: './app.js',
+
+    output:{
+        path: './',
+        filename: 'main.js'
+    },
+
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                loader: "babel",
+                query: {
+                    presets: ['es2015']
+                }
+            }
+        ]
+    }
+};
+```
+
+* 新建/`index.html`和/`app.js`文件，内容分别如下
+
+/**index.html**
+
+```html
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script src="main.js"></script>
+    </body>
+    </html>
+```
+
+/**app.js**
+
+```javascript
+//ES6
+import 'babel-polyfill';    //可按需选择是否加载
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class Person extends React.Component{
+    render() {//开头花括号一定要和小括号隔一个空格，否则识别不出来
+        return (
+            <div>
+                <p>姓名：{this.props.name}</p>
+                <p>性别：{this.props.sex}</p>
+                <p>年龄：{this.props.age}</p>
+            </div>    
+        );
+    }
+} 
+
+ReactDOM.render(
+    <Person name='Erick' sex='male' age='23' />,
+     document.getElementById('app')
+);       
+```
+
+配置完成！让我们试试吧。
+
+命令行执行
+
+```bash
+$ webpack
+Hash: d64464758f8b8762b8fe
+Version: webpack 1.13.2
+Time: 4640ms
+  Asset    Size  Chunks             Chunk Names
+main.js  998 kB       0  [emitted]  main
+    + 474 hidden modules
+
+```
+
+
+可以看到项目目录生成一个`main.js`，用浏览器打开`index.html`看一下吧：
+
+![ES6 + Webpack + React循序渐进Demo](/images/webpack_react_demo.png)
+
+现在我们终于把一个简单的`React Demo`跑起来了，那么就让我们开始正式进入到主题中，开始[react学习之路](http://linyk.me/)吧！
