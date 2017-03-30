@@ -4,6 +4,8 @@ date: 2017-03-29 11:12:52
 tags: 
 ---
 
+
+
 babel-cli和babel-core的区别
 
 babel-core可直接导入代码之中，类似于polyfill,使得解析器能够读懂ES6

@@ -1,7 +1,7 @@
 ---
 title: React入门：循序渐进学习ES6 + Webpack + React
 date: 2017-03-29 09:22:51
-tags: [react,笔记]
+tags: react
 reward: true
 ---
 
