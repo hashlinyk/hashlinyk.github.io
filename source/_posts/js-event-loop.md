@@ -1,8 +1,10 @@
 ---
 title: 【转载】JavaScript：彻底理解同步、异步和事件循环(Event Loop)
 date: 2017-03-23 15:07:07
-tags: Javascript
+tags: 
+  - Javascript
 ---
+
 一. 单线程
 ---
 
