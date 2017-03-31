@@ -1,11 +1,12 @@
 <a href="<%- url_for(post.path) %>" class="<%= class_name %>">
   	<time datetime="<%= date_xml(post.date) %>" itemprop="datePublished">
   		<i class="icon-calendar icon"></i>
-  		<% var today = date(post.date, date_format); %>
-  		<% if( today == date(new Date, date_format) ){ %>
+
+  		<% var now = new Date(); %>
+  		<% if( +new Date(date(post.date, date_format)) == +new Date(now.getFullYear()+'-'+ (now.getMonth()+1)+'-'+now.getDate() +' 08:00:00') ){ %>
   		<%- "今天"   %>
   		<% }else{ %>
-  		<%-	 today  %>
+  		<%-	 date(post.date, date_format)  %>
   		<% } %>
   	</time>
 </a>
