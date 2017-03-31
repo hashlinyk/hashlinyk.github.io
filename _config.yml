@@ -62,8 +62,15 @@ pagination_dir: page
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
+# plugins:
+#  - hexo-generator-feed
+#  - hexo-generator-baidu-sitemap
+#  - hexo-generator-sitemap
+
+
 ## Themes: https://hexo.io/themes/
 theme: yilia
+
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -72,7 +79,16 @@ deploy:
   repo: git@github.com:PilgrimErick/PilgrimErick.github.io.git
   branch: master
 
+sitemap:
+    path: sitemap.xml
+baidusitemap:
+    path: baidusitemap.xm
 
+
+feed:
+    type: atom
+    path: atom.xml
+    limit: 100
 
 jsonContent:
   meta: false

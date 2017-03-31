@@ -110,7 +110,7 @@ $ npm init
 $ npm install --save-dev babel-cli  
 ```
 
-babel 6除了babel-cli模块之外，还有另一个模块babel-core，如果不清楚可以参见：[babel-cli和babel-core的用法和区别](/)， 我们这里用babel-cli。
+babel 6除了babel-cli模块之外，还有另一个模块babel-core，如果不清楚可以参见：[babel-cli和babel-core的用法和区别](http://linyk.me/2017/03/29/babel-usage/)， 我们这里用babel-cli。
 
 Babel 6官方推荐**本地安装**babel-cli，而不是全局安装，所以我们不能直接在该目录的命令行下使用`babel`命令，不过可以在`package.json`中这样：
 
