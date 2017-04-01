@@ -78,7 +78,7 @@ ReactDOM.render(
 二、Babel介绍
 --------------
 
-* **提示**：如果你对Babel有所了解或较为熟悉，可以快速浏览或直接跳过本节。
+* **提示**：如果你对Babel有所了解或较为熟悉，可以快速浏览或直接跳过本节，直接到本文第三节<a href="#webpack+react" target="_self">Webpack+React</a>。
 
 不管是ES5还是ES6，我们最终的代码肯定是在浏览器上跑的，所以最终输出到页面中的代码必须要求是ES5语法的版本，才能满足浏览器兼容性。
 
@@ -326,7 +326,7 @@ Uncaught ReferenceError: require is not defined
 
 这时我们就需要另一个工具了：Webpack！去掉require，将依赖全部导入到`main.js`中，打包成一个文件输出！
 
-三、Webpack + React
+<span id="webpack+react">三、Webpack + React</span>
 ---
 
 如果你是一步步看到这里，忍受上面这么多的长篇大论，说明你实在是一位大毅力者，给你点赞！
