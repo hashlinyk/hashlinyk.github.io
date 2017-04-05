@@ -8,7 +8,7 @@ menu:
 subnav:
   github: "https://github.com/pilgrimerick"
   # weibo: "http://weibo.com/erick"
-  # rss: /atom.xml
+  rss: /atom.xml
   #zhihu: "#"
   #douban: "#"
   #segmentfault: "#"
