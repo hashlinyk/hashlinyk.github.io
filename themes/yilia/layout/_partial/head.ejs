@@ -27,6 +27,23 @@
   <link rel="dns-prefetch" href="<%= config.url %>">
   <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <script>
+  (function(){
+    if('<%= page.password %>' !== 'undefined'){
+      if(sessionStorage.getItem(location.pathname) != '<%= page.password %>'){
+        var p = eval("\u0070\u0072\u006f\u006d\u0070\u0074\u0028\'\u8bf7\u8f93\u5165\u6587\u7ae0\u5bc6\u7801\'\u0029\u003b");
+        if (p === '<%= page.password %>'){
+          sessionStorage.setItem(location.pathname, '<%= page.password %>');
+        }else{
+          if(p !== null){
+            eval("\u0061\u006c\u0065\u0072\u0074\u0028\'\u5bc6\u7801\u9519\u8bef\uff01\'\u0029\u003b");
+          }
+          history.back();
+        }
+      }
+    }
+  })();
+  </script>
   <%- open_graph({twitter_id: theme.twitter, google_plus: theme.google_plus, fb_admins: theme.fb_admins, fb_app_id: theme.fb_app_id}) %>
   <% if (theme.rss){ %>
     <link rel="alternative" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
