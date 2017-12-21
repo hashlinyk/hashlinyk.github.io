@@ -1,7 +1,7 @@
 ---
 title: Babel 6.0之babel-cli和babel-core的用法和区别
 date: 2017-03-31 06:12:52
-tags: Babel
+tags: 
 ---
 
 在Babel 6以前，Babel是一个专注且单一的Javascript转换器，然而Babel团队的志向不仅于此，更想把Babel打造成一个平台，由各个不同的功能模块和可插拔插件组成，用于创建下一代JavaScript工具集。
