@@ -16,4 +16,4 @@ reward: false
 然而，我是个懒人，能坚持更新吗？坚持多久呢？嘛，谁也说不清楚，有灵感就会来这儿划上一笔的！
 
 
-> PS：本博客当前使用的是 [litten](https://github.com/litten) 提供的 [yilia](https://github.com/litten/hexo-theme-yilia) 主题，这个风格我很喜欢，特此感谢！
+> PS：本博客当前使用的主题基于 [litten](https://github.com/litten) 提供的 [yilia](https://github.com/litten/hexo-theme-yilia) 主题，并在此基础上做了些许自定义细节调整。这个主题整体风格我很喜欢，特此感谢！
