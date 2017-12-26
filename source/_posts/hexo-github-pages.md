@@ -77,5 +77,5 @@ $ git branch
 
 
 
->PS：**欢迎转载，转载请注明**：
+> **欢迎转载，转载请注明**：
 >* 本文转自 [http://linyk.me/2017/03/24/hexo-github-pages/](http://linyk.me/2017/03/24/hexo-github-pages/)，作者 [Erick](http://linyk.me)

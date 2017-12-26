@@ -93,5 +93,5 @@ reward: true
 
 如果有别的实现“一次性”抽取的算法，欢迎评论交流！
 
->PS：**欢迎转载，转载请注明**：
+> **欢迎转载，转载请注明**：
 >* 本文转自 [http://linyk.me/2017/12/20/schrodinger-s-cat-draw-algorithm/](http://linyk.me/2017/12/20/schrodinger-s-cat-draw-algorithm/)，作者 [Erick](http://linyk.me)
