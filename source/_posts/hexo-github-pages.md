@@ -3,6 +3,7 @@ title: 使用Hexo，如何在多台电脑上维护和更新github pages博客
 date: 2017-03-24 05:51:40
 tags: hexo
 reward: true
+copyright: true
 ---
 
 今天在公司用hexo搭好博客之后，突然有个疑问：我想要回到家继续写文章，那换了电脑之后该怎么更新博客呢？
@@ -72,10 +73,3 @@ $ git branch
 
 
 **注意**：每次**换电脑进行博客更新**时，不管上次在其他电脑有没有更新（就怕更新之后忘了），最好先`git pull`获取`xxx`分支的最新版本，之后再进行编辑和提交。
-
-
-
-
-
-> **欢迎转载，转载请注明**：
->* 本文转自 [http://linyk.me/2017/03/24/hexo-github-pages/](http://linyk.me/2017/03/24/hexo-github-pages/)，作者 [Erick](http://linyk.me)

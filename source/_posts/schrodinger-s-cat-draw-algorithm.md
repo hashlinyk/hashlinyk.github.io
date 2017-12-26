@@ -3,11 +3,12 @@ title: 一个简单抽奖算法：从数组中“一次性”随机抽取若干�
 date: 2017-12-20 08:57:19
 tags: 算法
 reward: true
+copyright: true
 ---
 
 曾经看到过一篇关于程序员年会抽奖的搞笑漫画[《年会上的程序员们……》](http://mp.weixin.qq.com/s/X0ms_tCvkvQkSXnAXWNJ5g)，当时只是一笑了之。如今再看，却有了一个疑问：**如何从一个数组中“一次性”随机抽取若干个不重复项？**
 
-![如何从一个数组中“一次性”随机抽取若干个不重复项？](/images/draw_joke.png)
+![如何从一个数组中“一次性”随机抽取若干个不重复项？](/images/draw_joke.jpg)
 
 <!-- more -->
 
@@ -92,6 +93,3 @@ reward: true
 在随机数生成以后，在进行“排序截取”前，谁都无法得知最终的结果是怎样的。只有在程序进行排序截取之后，结果才能得知，基本实现了公平的随机性。
 
 如果有别的实现“一次性”抽取的算法，欢迎评论交流！
-
-> **欢迎转载，转载请注明**：
->* 本文转自 [http://linyk.me/2017/12/20/schrodinger-s-cat-draw-algorithm/](http://linyk.me/2017/12/20/schrodinger-s-cat-draw-algorithm/)，作者 [Erick](http://linyk.me)
