@@ -3,7 +3,7 @@ title: 一个简单抽奖算法：从数组中“一次性”随机抽取若干�
 date: 2017-12-20 08:57:19
 tags: 算法
 reward: true
-copyright: true
+copyright: false
 ---
 
 曾经看到过一篇关于程序员年会抽奖的搞笑漫画[《年会上的程序员们……》](http://mp.weixin.qq.com/s/X0ms_tCvkvQkSXnAXWNJ5g)，当时只是一笑了之。如今再看，却有了一个疑问：**如何从一个数组中“一次性”随机抽取若干个不重复项？**
