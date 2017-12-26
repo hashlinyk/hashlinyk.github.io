@@ -2,7 +2,7 @@
 
 menu:
   最新: /
-  所有文章: /archives/  
+  时间归档: /archives/  
   作品库: http://works.linyk.me/  
 
 # SubNav
@@ -42,7 +42,7 @@ weixin: https://cn.gravatar.com/userimage/109807169/15f1efc943fabe7d4718d34d834a
 open_in_new: true
 
 # Miscellaneous
-baidu_analytics: false
+baidu_analytics: true
 google_analytics: false
 favicon: /favicon.ico
 
