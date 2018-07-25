@@ -2,8 +2,8 @@
 
 menu:
   最新: /
-  时间归档: /archives/  
-  作品库: http://works.linyk.me/  
+  时间归档: /archives/
+  作品库: http://works.linyk.me/
 
 # SubNav
 subnav:
@@ -13,7 +13,7 @@ subnav:
   #zhihu: "#"
   #douban: "#"
   #segmentfault: "#"
-  mail: "mailto:erick1213@qq.com"
+  mail: "mailto:hash1024@qq.com"
   #facebook: "#"
   #google: "#"
   #twitter: "#"
@@ -24,7 +24,7 @@ rss: /atom.xml
 # 是否需要修改 root 路径
 # 如果您的网站存放在子目录中，例如 http://yoursite.com/blog，
 # 请将您的 url 设为 http://yoursite.com/blog 并把 root 设为 /blog/。
-root: 
+root:
 
 # Content
 excerpt_link: 'more'
@@ -57,7 +57,7 @@ mobile:
 
 #是否开启多说评论，填写你在多说申请的项目名称 duoshuo: duoshuo-key
 #若使用disqus，请在博客config文件中填写disqus_shortname，并关闭多说评论
-duoshuo: 
+duoshuo:
 
 # 样式定制 - 一般不需要修改，除非有很强的定制欲望…
 style:
