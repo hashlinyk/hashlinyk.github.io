@@ -1,6 +1,8 @@
 ---
 title: 从VDOM切入浅谈Vue的框架设计思想
 date: 2019-08-18 10:27:00
+reward: true
+copyright: true
 tags: 
   - VDOM
   - Vue
