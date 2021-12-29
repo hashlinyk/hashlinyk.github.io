@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hash的博客
+title: 林粤凯的博客
 subtitle: 我的梦想很简单...
-description: 林粤凯，广东工业大学12级，坐标深圳；此为本人学习、分享和沉淀的个人技术博客，主要涉及web前端，偶尔记叙一些生活情绪小事，分享喜怒哀乐。
-author: Hash
+description: 林粤凯，坐标深圳；此为本人学习、分享和沉淀的个人技术博客，主要涉及web前端，偶尔记叙一些生活情绪小事
+author: 林粤凯
 language: zh-cn
 timezone:
 
@@ -76,7 +76,7 @@ theme: yilia
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:PilgrimErick/PilgrimErick.github.io.git
+  repo: git@github.com:hashlinyk/hashlinyk.github.io.git
   branch: master
 
 sitemap:
