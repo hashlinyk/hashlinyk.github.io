@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>林粤凯的博客</title>
+  
+  <subtitle>我的梦想很简单...</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="//linyk.me/"/>
+  <updated>2021-12-29T13:06:51.473Z</updated>
+  <id>//linyk.me/</id>
+  
+  <author>
+    <name>林粤凯</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>从VDOM切入浅谈Vue的框架设计思想</title>
+    <link href="//linyk.me/2019/08/18/vue-s-frame-design-idea/"/>
+    <id>//linyk.me/2019/08/18/vue-s-frame-design-idea/</id>
+    <published>2019-08-18T02:27:00.000Z</published>
+    <updated>2021-12-29T13:06:51.473Z</updated>
+    
+    <content type="html"><![CDATA[<p>文章开始先简单介绍VDOM的概念。VDOM全称是Virtual DOM，即虚拟DOM。本质上是一个树形数据结构的JS Object，该树形结构的每个对象节点都包含有一些key-value，如标签名、Attributes、节点内容等，类比于真实DOM节点所具有的属性。那么VDOM的作用是什么？</p><p>技术最终都是为业务而服务的，VDOM也不过是一种技术手段，用于下面解决这种场景： </p><pre><code>随着时间的推移，在项目业务代码日益庞大复杂的情况下，巨量的DOM操作代码难以进行手工优化，存在许多不必要的DOM操作损耗，常常触发大面积的页面更新，引起大面积重绘甚至回流，而需求可能只是想要更新某个组件下的某个文本节点，却刷新了整个组件......最终项目不堪重负，难以维护。基于这种情况，最先想到的是方案是封装一个库，使用createDocumentFragment创建一个目标DOM片段，然后和现有的DOM进行比较（Diff），找出实际需要更新的节点，再把实际节点渲染到文档中。但是这种方案问题依然存在，因为遍历DOM进行diff本身就是一个开销巨大的事情。于是乎，VDOM出现了。众所周知DOM操作相对于纯JS执行来说，是十分慢的【1】。因此VDOM的作用就是取代这个真实`DOM Diff`过程，改为`VDOM Diff`，从操作DOM改成操作JS Object，速度大大提升！</code></pre><a id="more"></a><p>VDOM的实现并不比经过优化的手动直接操作DOM更快，原因在于其还有额外的Diff算法损耗；但好处在于它有更好的可维护性的同时还能提供不错的性能，毕竟人力无法永远保持高度的专注力去优化繁杂的业务逻辑代码。</p><p>VDOM的主流表现形式之一是<em>JSX</em>，JSX的写法和JS一样动态灵活，非常适合构建复杂的应用，但这种灵活也因此产生了一个短板：正是因为JS代码写法多变，使得框架内部无法安全精准地预判需要更新的具体地方，因此需要一轮树型Diff的遍历，才敢保证安全地触发局部更新。</p><p><em>模板</em>是VDOM实现的另外一种表现形式，优点是写法有规则，受约束，结构清晰直观；相对的缺点就是灵活性不足，在某些极端场景下难以完整发挥JS的能力，会让人感到“憋屈”。</p><p>综上对比，纯JSX表现的VDOM实现会存在一个问题，即依赖的运行时代码逻辑要多一些，因为为了能做出更多的DOM更新优化（毕竟DOM性能损耗才是大头），需要考虑的东西更多以保证性能，因此打包后代码量也会大一些。而纯模板实现的优缺点也是很明显的，由于代码写法都在规则之内，因此可以在优化时做出更多的预判，而预判优化是可以放在预编译阶段完成的，因此也使得运行时代码相对少些，但是，模板实现形式的不灵活性是个硬伤，在应对某些复杂业务上偶尔会余力不足。</p><p>Vue将模板形式和JSX形式两种都支持了，据我所知最开始的主流模板渲染形式和VDOM Diff算法并没有结合起来，正是由于Vue才让两者之间优点结合并发扬光大（也有可能是我孤陋寡闻…）。</p><p>事实上Vue性能也许不是最好的，但在框架设计考虑这块深得我心。在Vue3.0中，虽然出了新的写法且变化巨大一时难以适应，但据说在模板的VDOM Diff算法上的改进很大，由于模板的优点，使得Vue可以划分静态节点（如纯文本节点）和动态节点（数据绑定节点），而静态节点实际上是不需要Diff的，这也使得Vue在很多场景下只对动态节点做diff，此时原有的树型diff可能就扁平化成数组diff，大大降低了模板VDOM Diff的性能损耗，因此Vue3.0值得期待。</p><p>在框架设计过程中的权衡和考量，Vue综合吸取了Angular在系统应用层面上的“全”和React在底层扩展灵活方便上的“细”，在学习上更加简单，不必一开始便掌握大量暂时使用不到的概念，并且也可以循序渐进逐步学习、安装和使用其他功能“配件”，因此官方称其为“渐进式”Javascript框架，这也是我最喜欢的一点。</p><blockquote><p>【1】： JS本身并不具备DOM，只有DOM操作能力，而DOM是浏览器提供的。DOM的渲染和JS的执行分属两个不同的线程，因此JS操作DOM实际上是线程之间的通信，也因此代价要比JS本身的执行要高得多。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;文章开始先简单介绍VDOM的概念。VDOM全称是Virtual DOM，即虚拟DOM。本质上是一个树形数据结构的JS Object，该树形结构的每个对象节点都包含有一些key-value，如标签名、Attributes、节点内容等，类比于真实DOM节点所具有的属性。那么VDOM的作用是什么？&lt;/p&gt;
+&lt;p&gt;技术最终都是为业务而服务的，VDOM也不过是一种技术手段，用于下面解决这种场景： &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;随着时间的推移，在项目业务代码日益庞大复杂的情况下，巨量的DOM操作代码难以进行手工优化，存在许多不必要的DOM操作损耗，常常触发大面积的页面更新，引起大面积重绘甚至回流，而需求可能只是想要更新某个组件下的某个文本节点，却刷新了整个组件......最终项目不堪重负，难以维护。
+
+基于这种情况，最先想到的是方案是封装一个库，使用createDocumentFragment创建一个目标DOM片段，然后和现有的DOM进行比较（Diff），找出实际需要更新的节点，再把实际节点渲染到文档中。但是这种方案问题依然存在，因为遍历DOM进行diff本身就是一个开销巨大的事情。于是乎，VDOM出现了。
+
+众所周知DOM操作相对于纯JS执行来说，是十分慢的【1】。因此VDOM的作用就是取代这个真实`DOM Diff`过程，改为`VDOM Diff`，从操作DOM改成操作JS Object，速度大大提升！
+&lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+    
+      <category term="VDOM" scheme="//linyk.me/tags/VDOM/"/>
+    
+      <category term="Vue" scheme="//linyk.me/tags/Vue/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Javascript呈现星星评分效果的最简单实现</title>
+    <link href="//linyk.me/2017/10/13/stars-score/"/>
+    <id>//linyk.me/2017/10/13/stars-score/</id>
+    <published>2017-10-13T07:30:28.000Z</published>
+    <updated>2021-12-29T12:28:52.205Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天群里聊到星星评分实现的需求，突然想起来以前看过此类的一个超简单实现，花了几分钟思考重现了这一小段代码：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *  score为分值，范围为0-5 </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">stars</span>(<span class="params">score</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"★★★★★☆☆☆☆☆"</span>.substr(<span class="number">5</span> - score, <span class="number">5</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stars(<span class="number">3</span>);   <span class="comment">//★★★☆☆</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天群里聊到星星评分实现的需求，突然想起来以前看过此类的一个超简单实现，花了几分钟思考重现了这一小段代码：&lt;/p&gt;
+&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span c
+      
+    
+    </summary>
+    
+    
+      <category term="Javascript" scheme="//linyk.me/tags/Javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>排序算法：Javascript实现冒泡排序</title>
+    <link href="//linyk.me/2017/06/05/bubble-sort/"/>
+    <id>//linyk.me/2017/06/05/bubble-sort/</id>
+    <published>2017-06-05T12:05:38.000Z</published>
+    <updated>2021-12-29T12:28:52.203Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一、冒泡原理"><a href="#一、冒泡原理" class="headerlink" title="一、冒泡原理"></a>一、冒泡原理</h2><p>按从小到大排列顺序的实现来举例，冒泡的过程是指：</p><p><strong>从第一个数开始，相邻两个数之间比较，将较大的数记为a；若a处于后者则顺序不变动，不是处于后者则将其与对比的较小的数调换（如同“往上”冒一个泡）；然后重新比较a的值和其后面一位数的大小，将较大的数重新设为a，再次使a“冒泡”；反复往后比较并“冒泡”，直到a到达数列底部（“水面”）；</strong></p><p>以上为一次<strong>冒泡过程</strong>，得到了一个最大值，然后继续开始第二次<strong>冒泡过程</strong>，这时只需要在排除最后一个数（已排序成功的最大值）的子数列中进行冒泡，同理将第一个数冒泡至该子数列底部。</p><a id="more"></a><p>……</p><p>重复上述冒泡循环，直到倒数第二个数冒泡完成（倒数第二个数排序完成，则剩下的最后一个数顺序也就确定了），假设数列一共有n个数，则需要进行n-1次循环的<strong>冒泡过程</strong>。</p><p>每次<strong>冒泡过程</strong>的具体逻辑都是一致的，也是一个循环，即随着当前（子）数列索引<code>j</code>（假设从0开始）的递增，循环判断相邻的两项大小（进行冒泡），直到当前索引<code>j</code>等于当前（子）数列个数减1（注意“当前”的冒泡数列的长度是递减的）。</p><h2 id="二、算法实现"><a href="#二、算法实现" class="headerlink" title="二、算法实现"></a>二、算法实现</h2><p>根据以上逻辑，我们可以写出以下的代码实现（<code>i</code>值循环递减的写法）：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">3</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">9</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> len = arr.length;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=len<span class="number">-1</span>; i&gt;<span class="number">0</span>;i--)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j=<span class="number">0</span>;j&lt;i;j++)&#123;</span><br><span class="line">            <span class="comment">// 由小到大用 &gt;， 由大到小就是 &lt; </span></span><br><span class="line">            <span class="keyword">if</span>(arr[j] &gt; arr[j+<span class="number">1</span>])&#123;</span><br><span class="line">                <span class="keyword">var</span> tmp = arr[j];</span><br><span class="line">                arr[j] = arr[j+<span class="number">1</span>];</span><br><span class="line">                arr[j+<span class="number">1</span>] = tmp;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bubbleSort(arr);    <span class="comment">// [0, 1, 2, 3, 5, 5, 7, 8, 9]</span></span><br></pre></td></tr></table></figure><p>还有另外一种写法，也放出来供对比一下（<code>i</code>值循环递增的写法）：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">3</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">9</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">arr</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> len = arr.length;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;len<span class="number">-1</span>;i++)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j=<span class="number">0</span>;j&lt;len<span class="number">-1</span>-i;j++)&#123;</span><br><span class="line">            <span class="comment">// 由小到大用 &gt;， 由大到小就是 &lt; </span></span><br><span class="line">            <span class="keyword">if</span>(arr[j] &gt; arr[j+<span class="number">1</span>])&#123;</span><br><span class="line">                <span class="keyword">var</span> tmp = arr[j];</span><br><span class="line">                arr[j] = arr[j+<span class="number">1</span>];</span><br><span class="line">                arr[j+<span class="number">1</span>] = tmp;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bubbleSort(arr);    <span class="comment">// [0, 1, 2, 3, 5, 5, 7, 8, 9]</span></span><br></pre></td></tr></table></figure><p>两种方式都可以，看各人喜好吧 :p</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;一、冒泡原理&quot;&gt;&lt;a href=&quot;#一、冒泡原理&quot; class=&quot;headerlink&quot; title=&quot;一、冒泡原理&quot;&gt;&lt;/a&gt;一、冒泡原理&lt;/h2&gt;&lt;p&gt;按从小到大排列顺序的实现来举例，冒泡的过程是指：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;从第一个数开始，相邻两个数之间比较，将较大的数记为a；若a处于后者则顺序不变动，不是处于后者则将其与对比的较小的数调换（如同“往上”冒一个泡）；然后重新比较a的值和其后面一位数的大小，将较大的数重新设为a，再次使a“冒泡”；反复往后比较并“冒泡”，直到a到达数列底部（“水面”）；&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以上为一次&lt;strong&gt;冒泡过程&lt;/strong&gt;，得到了一个最大值，然后继续开始第二次&lt;strong&gt;冒泡过程&lt;/strong&gt;，这时只需要在排除最后一个数（已排序成功的最大值）的子数列中进行冒泡，同理将第一个数冒泡至该子数列底部。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="排序算法" scheme="//linyk.me/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="冒泡排序" scheme="//linyk.me/tags/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>new Date解析日期字符串在不同浏览器的差异</title>
+    <link href="//linyk.me/2017/03/31/chrome-date-bug/"/>
+    <id>//linyk.me/2017/03/31/chrome-date-bug/</id>
+    <published>2017-03-31T02:42:35.000Z</published>
+    <updated>2021-12-29T12:28:52.203Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天，偶然发现一个Chrome对于执行<code>new Date()</code>表达式产生的怪异现象，如下所示：</p><ul><li>Chrome F12控制台</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">"2017-03-31"</span>);     <span class="comment">//打印： Fri Mar 31 2017 08:00:00 GMT+0800 (中国标准时间)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">"2017-3-31"</span>);      <span class="comment">//打印： Fri Mar 31 2017 00:00:00 GMT+0800 (中国标准时间)</span></span><br></pre></td></tr></table></figure><p>即在这种情况下，输出的结果差别是<code>08</code>时和<code>00</code>时。而在其他浏览器是这样的：</p><a id="more"></a><ul><li>Firefox控制台</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">"2017-03-31"</span>);     <span class="comment">//打印： 2017-03-31T00:00:00.000Z</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">"2017-3-31"</span>);      <span class="comment">//打印： 2017-03-31T00:00:00.000Z</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//结果一致</span></span><br></pre></td></tr></table></figure><ul><li>IE控制台模拟：IE 9</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">"2017-03-31"</span>);     <span class="comment">//打印： Fri Mar 31 08:00:00 UTC+0800 2017 </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">"2017-3-31"</span>);      <span class="comment">//打印： Invalid Date</span></span><br></pre></td></tr></table></figure><ul><li>IE控制台模拟：IE 7/8</li></ul><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">"2017-03-31"</span>);     <span class="comment">//打印： NaN </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">"2017-3-31"</span>);      <span class="comment">//打印： NaN</span></span><br></pre></td></tr></table></figure><p>可以看到，Firefox得到的结果应该是和我们期望的一样，而IE……一如既往的给予我们惊喜。</p><p><strong>总结</strong>：<code>new Date</code>对于日期字符串的解析因浏览器而异，为了保持最大兼容性的统一，建议使用以下格式：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(yyyy,mth,dd,hh,mm,ss);  <span class="comment">//精确到秒</span></span><br><span class="line">        </span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(yyyy,mth,dd);           <span class="comment">//精确到天</span></span><br></pre></td></tr></table></figure><ul><li><strong>注意：以上的<code>mth</code>值为现实世界月份-1。</strong></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天，偶然发现一个Chrome对于执行&lt;code&gt;new Date()&lt;/code&gt;表达式产生的怪异现象，如下所示：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Chrome F12控制台&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Date&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;2017-03-31&quot;&lt;/span&gt;);     &lt;span class=&quot;comment&quot;&gt;//打印： Fri Mar 31 2017 08:00:00 GMT+0800 (中国标准时间)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Date&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;2017-3-31&quot;&lt;/span&gt;);      &lt;span class=&quot;comment&quot;&gt;//打印： Fri Mar 31 2017 00:00:00 GMT+0800 (中国标准时间)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;即在这种情况下，输出的结果差别是&lt;code&gt;08&lt;/code&gt;时和&lt;code&gt;00&lt;/code&gt;时。而在其他浏览器是这样的：&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Javascript" scheme="//linyk.me/tags/Javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Babel 6.0之babel-cli和babel-core的用法和区别</title>
+    <link href="//linyk.me/2017/03/31/babel-usage/"/>
+    <id>//linyk.me/2017/03/31/babel-usage/</id>
+    <published>2017-03-30T22:12:52.000Z</published>
+    <updated>2021-12-29T12:28:52.203Z</updated>
+    
+    <content type="html"><![CDATA[<p>在Babel 6以前，Babel是一个专注且单一的Javascript转换器，然而Babel团队的志向不仅于此，更想把Babel打造成一个平台，由各个不同的功能模块和可插拔插件组成，用于创建下一代JavaScript工具集。</p><p>于是Babel 6发布了。</p><p>Babel 6本身不具有转换ES6代码的功能，也不再默认内嵌支持JSX语法，这一切都需要通过安装对应的转换器插件来实现。</p><a id="more"></a><p>在此之前，Babel囊括了整个编译器、所有的转换器以及一个CLI工具， 虽然方便使用，这么做的缺点就是它会导致很多不必要的下载。现在，Bable不再是一个整体包了，它分为了两个单独的包，<code>babel-cli</code>和<code>babel-core</code>。此外还有一些插件预设，如<code>babel-preset-es2015</code>、<code>babel-preset-react</code>等。</p><ul><li><p>如果你想要在命令行使用Babel，你可以安装<code>babel-cli</code></p></li><li><p>如果你需要在一个Node项目中使用Babel，你可以使用<code>babel-core</code></p></li></ul><blockquote><p>参考：<a href="http://www.csdn.net/article/2015-11-17/2826233" target="_blank" rel="noopener">走进Babel 6.0 全新特性解析</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在Babel 6以前，Babel是一个专注且单一的Javascript转换器，然而Babel团队的志向不仅于此，更想把Babel打造成一个平台，由各个不同的功能模块和可插拔插件组成，用于创建下一代JavaScript工具集。&lt;/p&gt;
+&lt;p&gt;于是Babel 6发布了。&lt;/p&gt;
+&lt;p&gt;Babel 6本身不具有转换ES6代码的功能，也不再默认内嵌支持JSX语法，这一切都需要通过安装对应的转换器插件来实现。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>使用Hexo，如何在多台电脑上维护和更新github pages博客</title>
+    <link href="//linyk.me/2017/03/24/hexo-github-pages/"/>
+    <id>//linyk.me/2017/03/24/hexo-github-pages/</id>
+    <published>2017-03-23T21:51:40.000Z</published>
+    <updated>2021-12-29T12:28:52.204Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天在公司用hexo搭好博客之后，突然有个疑问：我想要回到家继续写文章，那换了电脑之后该怎么更新博客呢？</p><p>思路：<strong>使用git分支</strong>。</p><p>即用个人博客仓库的<code>master</code>分支来保存博客静态页面，新建另一个分支来保存hexo部署环境目录！之后每次博客的更新就在新分支上编辑和发布（deploy），把生成的博客页面推到<code>master</code>分支上。</p><p>话不多说，下面是我实践的方法（前四步是在公司电脑上，第五步是家里的电脑）：</p><a id="more"></a><h2 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h2><p>开始本教程之前，请确保你已经使用hexo在github pages上面部署好你的个人博客，并在本地电脑拥有该博客的部署环境，即类似于以下图片的文件目录（博客根目录）：</p><p><img src="/images/9U31M0VVJ.png" alt="hexo-github-pages博客部署环境文件目录"></p><p>如果这一步还未完成，请自行搜索如何使用hexo搭建Github Pages个人博客，网上教程一大堆，不再赘述。</p><h2 id="二、对username-github-io仓库新建分支，并克隆"><a href="#二、对username-github-io仓库新建分支，并克隆" class="headerlink" title="二、对username.github.io仓库新建分支，并克隆"></a>二、对username.github.io仓库新建分支，并克隆</h2><p>在Github的<code><em>username</em>.github.io</code>仓库上新建一个<code>xxx</code>分支，并切换到该分支，并在该仓库-&gt;Settings-&gt;Branches-&gt;Default branch中将默认分支设为<code>xxx</code>，save保存；然后将该仓库克隆到本地，进入该<code><em>username</em>.github.io</code>文件目录。</p><p>完成上面步骤后，在当前目录使用Git Bash执行<code>git branch</code>命令查看当前所在分支，应为新建的分支<code>xxx</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">*xxx</span><br></pre></td></tr></table></figure><h2 id="三、将本地博客的部署文件拷贝进username-github-io文件目录"><a href="#三、将本地博客的部署文件拷贝进username-github-io文件目录" class="headerlink" title="三、将本地博客的部署文件拷贝进username.github.io文件目录"></a>三、将本地博客的部署文件拷贝进username.github.io文件目录</h2><p>如题，先将本地博客的部署文件全部拷贝进<code><em>username</em>.github.io</code>文件目录。</p><p>接下来，将拷贝进来的博客hexo部署环境提交到<code>xxx</code>分支，提交之前需注意：</p><blockquote><ul><li>将<code>themes</code>目录以内中的主题的<code>.git</code>目录删除（如果有），因为一个git仓库中不能包含另一个git仓库，提交主题文件夹会失败。</li><li>可能有人会问，删除了<code>themes</code>目录中的<code>.git</code>不就不能<code>git pull</code>更新主题了吗，很简单，需要更新主题时在另一个地方<code>git clone</code>下来该主题的最新版本，然后将内容拷到当前主题目录即可</li></ul></blockquote><h2 id="四、提交xxx分支"><a href="#四、提交xxx分支" class="headerlink" title="四、提交xxx分支"></a>四、提交xxx分支</h2><p>执行<code>git add .</code>、<code>git commit -m &#39;back up hexo files&#39;</code>（引号内容可改）、<code>git push</code>即可将博客的hexo部署环境提交到GitHub个人仓库的<code>xxx</code>分支。</p><p>现在可以在GitHub上的<code><em>username</em>.github.io</code>仓库看到两个分支的差异了。</p><p><code>master</code>分支和<code>xxx</code>分支各自保存着一个版本，<code>master</code>分支用于保存博客静态资源，提供博客页面供人访问；<code>xxx</code>分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突，完美！</p><h2 id="五、新电脑环境部署和更新"><a href="#五、新电脑环境部署和更新" class="headerlink" title="五、新电脑环境部署和更新"></a>五、新电脑环境部署和更新</h2><p>至此，你的博客已经可以在其他电脑上进行同步的维护和更新了，方法很简单：</p><blockquote><ul><li>将新电脑的生成的ssh key添加到GitHub账户上</li><li>在新电脑上克隆<code><em>username</em>.github.io</code>仓库的<code>xxx</code>分支到本地，此时本地git仓库处于<code>xxx</code>分支</li><li>切换到<code><em>username</em>.github.io</code>目录，执行<code>npm install</code>(由于仓库有一个<code>.gitignore</code>文件，里面默认是忽略掉<code>node_modules</code>文件夹的，也就是说仓库的hexo分支并没有存储该目录[也不需要]，所以需要install下)</li></ul></blockquote><p>尽情地敲击键盘、挥洒笔墨吧！</p><blockquote><ul><li>编辑、撰写文章或其他博客更新改动</li><li>依次执行<code>git add .</code>、<code>git commit -m &#39;back up hexo files&#39;</code>（引号内容可改）、<code>git push</code>指令，保证<code>xxx</code>分支版本最新</li><li>执行<code>hexo d -g</code>指令（在此之前，有时可能需要执行<code>hexo clean</code>），完成后就会发现，最新改动已经更新到<code>master</code>分支了，两个分支互不干扰！</li></ul></blockquote><p><strong>注意</strong>：每次<strong>换电脑进行博客更新</strong>时，不管上次在其他电脑有没有更新（就怕更新之后忘了），最好先<code>git pull</code>获取<code>xxx</code>分支的最新版本，之后再进行编辑和提交。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天在公司用hexo搭好博客之后，突然有个疑问：我想要回到家继续写文章，那换了电脑之后该怎么更新博客呢？&lt;/p&gt;
+&lt;p&gt;思路：&lt;strong&gt;使用git分支&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;即用个人博客仓库的&lt;code&gt;master&lt;/code&gt;分支来保存博客静态页面，新建另一个分支来保存hexo部署环境目录！之后每次博客的更新就在新分支上编辑和发布（deploy），把生成的博客页面推到&lt;code&gt;master&lt;/code&gt;分支上。&lt;/p&gt;
+&lt;p&gt;话不多说，下面是我实践的方法（前四步是在公司电脑上，第五步是家里的电脑）：&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="//linyk.me/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>转载：彻底理解JavaScript的同步、异步和事件循环(Event Loop)</title>
+    <link href="//linyk.me/2017/03/23/js-event-loop/"/>
+    <id>//linyk.me/2017/03/23/js-event-loop/</id>
+    <published>2017-03-23T07:07:07.000Z</published>
+    <updated>2021-12-29T12:28:52.204Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一-单线程"><a href="#一-单线程" class="headerlink" title="一. 单线程"></a>一. 单线程</h2><p>我们常说“JavaScript是单线程的”。</p><p>所谓单线程，是指在JS引擎中负责解释和执行JavaScript代码的线程只有一个。不妨叫它<strong>主线程</strong>。</p><p>但是实际上还存在其他的线程。例如：处理AJAX请求的线程、处理DOM事件的线程、定时器线程、读写文件的线程(例如在Node.js中)等等。这些线程可能存在于JS引擎之内，也可能存在于JS引擎之外，在此我们不做区分。不妨叫它们<strong>工作线程</strong>。</p><a id="more"></a><h2 id="二-同步和异步"><a href="#二-同步和异步" class="headerlink" title="二. 同步和异步"></a>二. 同步和异步</h2><p>假设存在一个函数A：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A(args...);</span><br></pre></td></tr></table></figure></p><p><strong>同步</strong>：如果在函数A返回的时候，调用者就能够得到预期结果(即拿到了预期的返回值或者看到了预期的效果)，那么这个函数就是同步的。</p><p>例如：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.sqrt(<span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Hi'</span>);</span><br></pre></td></tr></table></figure><ul><li>第一个函数返回时，就拿到了预期的返回值：2的平方根。</li><li>第二个函数返回时，就看到了预期的效果：在控制台打印了一个字符串。</li></ul><p>所以这两个函数都是同步的。</p><p><strong>异步</strong>：如果在函数A返回的时候，调用者还不能够得到预期结果，而是需要在将来通过一定的手段得到，那么这个函数就是异步的。</p><p>例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(<span class="string">'foo.txt'</span>, <span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p><p>在上面的代码中，我们希望通过<code>fs.readFile</code>函数读取文件foo.txt中的内容，并打印出来。<br>但是在<code>fs.readFile</code>函数返回时，我们期望的结果并不会发生，而是要等到文件全部读取完成之后。如果文件很大的话可能要很长时间。</p><p>下面以AJAX请求为例，来看一下同步和异步的区别：</p><ul><li>异步AJAX：<blockquote><ul><li>主线程：“你好，AJAX线程。请你帮我发个HTTP请求吧，我把请求地址和参数都给你了。”</li><li>AJAX线程：“好的，主线程。我马上去发，但可能要花点儿时间呢，你可以先去忙别的。”</li><li>主线程：：“谢谢，你拿到响应后告诉我一声啊。”</li><li>(接着，主线程做其他事情去了。一顿饭的时间后，它收到了响应到达的通知。)</li></ul></blockquote></li><li>同步AJAX：<blockquote><ul><li>主线程：“你好，AJAX线程。请你帮我发个HTTP请求吧，我把请求地址和参数都给你了。”</li><li>AJAX线程：“……”</li><li>主线程：：“喂，AJAX线程，你怎么不说话？”</li><li>AJAX线程：“……”</li><li>主线程：：“喂！喂喂喂！”</li><li>AJAX线程：“……”</li><li>(一炷香的时间后)</li><li>主线程：：“喂！求你说句话吧！”</li><li>AJAX线程：“主线程，不好意思，我在工作的时候不能说话。你的请求已经发完了，拿到响应数据了，给你。”</li></ul></blockquote></li></ul><p>正是由于JavaScript是单线程的，而异步容易实现非阻塞，所以在JavaScript中对于耗时的操作或者时间不确定的操作，使用异步就成了必然的选择。异步是这篇文章关注的重点。</p><h2 id="三-异步过程的构成要素"><a href="#三-异步过程的构成要素" class="headerlink" title="三. 异步过程的构成要素"></a>三. 异步过程的构成要素</h2><p>从上文可以看出，异步函数实际上很快就调用完成了。但是后面还有工作线程执行异步任务、通知主线程、主线程调用回调函数等很多步骤。我们把整个过程叫做异步过程。异步函数的调用在整个异步过程中，只是一小部分。</p><p>总结一下，一个异步过程通常是这样的：</p><blockquote><p>主线程发起一个异步请求，相应的工作线程接收请求并告知主线程已收到(异步函数返回)；主线程可以继续执行后面的代码，同时工作线程执行异步任务；工作线程完成工作后，通知主线程；主线程收到通知后，执行一定的动作(调用回调函数)。</p></blockquote><p>异步函数通常具有以下的形式：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A(args..., callbackFn)</span><br></pre></td></tr></table></figure><p>它可以叫做异步过程的发起函数，或者叫做异步任务注册函数。<code>args</code>是这个函数需要的参数。<code>callbackFn</code>也是这个函数的参数，但是它比较特殊所以单独列出来。</p><p>所以，从主线程的角度看，一个异步过程包括下面两个要素：</p><blockquote><p><em>发起函数(或叫注册函数)<code>A</code></em>回调函数<code>callbackFn</code></p></blockquote><p>它们都是在主线程上调用的，其中注册函数用来发起异步过程，回调函数用来处理结果。</p><p>举个具体的例子：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(fn, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure><p>其中的<code>setTimeout</code>就是异步过程的发起函数，<code>fn</code>是回调函数。</p><p>注意：前面说的形式<code>A(args..., callbackFn)</code>只是一种抽象的表示，并不代表回调函数一定要作为发起函数的参数，例如：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.onreadystatechange = xxx; <span class="comment">// 添加回调函数</span></span><br><span class="line">xhr.open(<span class="string">'GET'</span>, url);</span><br><span class="line">xhr.send(); <span class="comment">// 发起函数</span></span><br></pre></td></tr></table></figure><p>发起函数和回调函数就是分离的。</p><h2 id="四-消息队列和事件循环"><a href="#四-消息队列和事件循环" class="headerlink" title="四. 消息队列和事件循环"></a>四. 消息队列和事件循环</h2><p>上文讲到，异步过程中，工作线程在异步操作完成后需要通知主线程。那么这个通知机制是怎样实现的呢？答案是利用消息队列和事件循环。</p><p>用一句话概括：</p><blockquote><p>*工作线程将消息放到消息队列，主线程通过事件循环过程去取消息。</p></blockquote><ul><li>消息队列：消息队列是一个先进先出的队列，它里面存放着各种消息。</li><li>事件循环：事件循环是指主线程重复从消息队列中取消息、执行的过程。</li></ul><p>实际上，主线程只会做一件事情，就是从消息队列里面取消息、执行消息，再取消息、再执行。当消息队列为空时，就会等待直到消息队列变成非空。而且主线程只有在将当前的消息执行完成后，才会去取下一个消息。这种机制就叫做事件循环机制，取一个消息并执行的过程叫做一次循环。</p><p>事件循环用代码表示大概是这样的：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> message = queue.get();</span><br><span class="line">    execute(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>那么，消息队列中放的消息具体是什么东西？消息的具体结构当然跟具体的实现有关，但是为了简单起见，我们可以认为：</p><p>消息就是注册异步任务时添加的回调函数。<br>再次以异步AJAX为例，假设存在如下的代码：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(<span class="string">'http://segmentfault.com'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">resp</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'我是响应：'</span>, resp);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其他代码</span></span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>主线程在发起AJAX请求后，会继续执行其他代码。AJAX线程负责请求segmentfault.com，拿到响应后，它会把响应封装成一个JavaScript对象，然后构造一条消息：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 消息队列中的消息就长这个样子</span></span><br><span class="line"><span class="keyword">var</span> message = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    callbackFn(response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>其中的<code>callbackFn</code>就是前面代码中得到成功响应时的回调函数。</p><p>主线程在执行完当前循环中的所有代码后，就会到消息队列取出这条消息(也就是<code>message</code>函数)，并执行它。到此为止，就完成了工作线程对主线程的通知，回调函数也就得到了执行。如果一开始主线程就没有提供回调函数，AJAX线程在收到HTTP响应后，也就没必要通知主线程，从而也没必要往消息队列放消息。</p><p>用图表示这个过程就是：</p><p><img src="/images/3259161542-575018ce29d44_articlex.png" alt="图表"></p><p>从上文中我们也可以得到这样一个明显的结论，就是：</p><blockquote><p>异步过程的回调函数，一定不在当前这一轮事件循环中执行。</p></blockquote><h2 id="五-异步与事件"><a href="#五-异步与事件" class="headerlink" title="五. 异步与事件"></a>五. 异步与事件</h2><p>上文中说的“事件循环”，为什么里面有个<code>事件</code>呢？那是因为：</p><blockquote><p>消息队列中的每条消息实际上都对应着一个事件。</p></blockquote><p>上文中一直没有提到一类很重要的异步过程：<strong>DOM事件</strong>。</p><p>举例来说：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> button = <span class="built_in">document</span>.getElement(<span class="string">'#btn'</span>);</span><br><span class="line">button.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>从事件的角度来看，上述代码表示：在按钮上添加了一个鼠标单击事件的事件监听器；当用户点击按钮时，鼠标单击事件触发，事件监听器函数被调用。</p><p>从异步过程的角度看，<code>addEventListener</code>函数就是异步过程的发起函数，事件监听器函数就是异步过程的回调函数。事件触发时，表示异步任务完成，会将事件监听器函数封装成一条消息放到消息队列中，等待主线程执行。</p><p><strong>事件</strong>的概念实际上并不是必须的，事件机制实际上就是异步过程的通知机制。我觉得它的存在是为了编程接口对开发者更友好。</p><p>另一方面，所有的异步过程也都可以用事件来描述。例如：<code>setTimeout</code>可以看成对应一个时间到了！的事件。前文的<code>setTimeout(fn, 1000);</code>可以看成：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timer.addEventListener(<span class="string">'timeout'</span>, <span class="number">1000</span>, fn);</span><br></pre></td></tr></table></figure><h2 id="六-生产者与消费者"><a href="#六-生产者与消费者" class="headerlink" title="六. 生产者与消费者"></a>六. 生产者与消费者</h2><p>从生产者与消费者的角度看，异步过程是这样的：</p><blockquote><p>工作线程是生产者，主线程是消费者(只有一个消费者)。工作线程执行异步任务，执行完成后把对应的回调函数封装成一条消息放到消息队列中；主线程不断地从消息队列中取消息并执行，当消息队列空时主线程阻塞，直到消息队列再次非空。</p></blockquote><h2 id="七-总结一下"><a href="#七-总结一下" class="headerlink" title="七. 总结一下"></a>七. 总结一下</h2><p>最后再用一个生活中的例子总结一下同步和异步：在公路上，汽车一辆接一辆，有条不紊的运行。这时，有一辆车坏掉了。假如它停在原地进行修理，那么后面的车就会被堵住没法行驶，交通就乱套了。幸好旁边有应急车道，可以把故障车辆推到应急车道修理，而正常的车流不会受到任何影响。等车修好了，再从应急车道回到正常车道即可。唯一的影响就是，应急车道用多了，原来的车辆之间的顺序会有点乱。</p><p>这就是同步和异步的区别。同步可以保证顺序一致，但是容易导致阻塞；异步可以解决阻塞问题，但是会改变顺序性。改变顺序性其实也没有什么大不了的，只不过让程序变得稍微难理解了一些 :)</p><p>PS：ECMAScript 262规范中，并没有对异步、事件队列等概念及其实现的描述。这些都是具体的JavaScript运行时环境使用的机制。本文重点是描述异步过程的原理，为了便于理解做了很多简化。所以文中的某些术语的使用可能是不准确的，具体细节也未必是正确的，例如消息队列中消息的结构。请读者注意。</p><blockquote><p>PS:本文转载自 <a href="https://segmentfault.com/a/1190000004322358" target="_blank" rel="noopener">https://segmentfault.com/a/1190000004322358</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;一-单线程&quot;&gt;&lt;a href=&quot;#一-单线程&quot; class=&quot;headerlink&quot; title=&quot;一. 单线程&quot;&gt;&lt;/a&gt;一. 单线程&lt;/h2&gt;&lt;p&gt;我们常说“JavaScript是单线程的”。&lt;/p&gt;
+&lt;p&gt;所谓单线程，是指在JS引擎中负责解释和执行JavaScript代码的线程只有一个。不妨叫它&lt;strong&gt;主线程&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;但是实际上还存在其他的线程。例如：处理AJAX请求的线程、处理DOM事件的线程、定时器线程、读写文件的线程(例如在Node.js中)等等。这些线程可能存在于JS引擎之内，也可能存在于JS引擎之外，在此我们不做区分。不妨叫它们&lt;strong&gt;工作线程&lt;/strong&gt;。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Javascript" scheme="//linyk.me/tags/Javascript/"/>
+    
+  </entry>
+  
+</feed>
