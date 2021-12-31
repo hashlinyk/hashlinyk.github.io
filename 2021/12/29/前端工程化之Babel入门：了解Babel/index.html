@@ -26,17 +26,18 @@
     }
   })();
   </script>
-  <meta name="description" content="谈到前端工程化，脑海中就会浮现Webpack、Eslint、Babel、Gulp、Rollup等字眼，甚至还有CI/CD（持续集成/持续部署）、自动化测试等高深概念。这篇文章将尝试用最简单的白话来了解Babel的概貌，认识Babel在前端工程流中的角色定位，以及基础用法，为之后的前端工程化深入学习做铺垫。 概貌Babel 是什么？Babel 是一个 JavaScript 编译器。 上面这句话就是B">
+  <meta name="description" content="谈到前端工程化，脑海中就会浮现Webpack、Eslint、Babel、Gulp、Rollup等字眼，甚至还有CI/CD（持续集成/持续部署）、自动化测试等高深概念。这篇文章将尝试用最简单的白话来了解Babel的概貌，认识Babel在前端工程流中的角色定位，以及基础用法，为之后的前端工程化深入学习做铺垫。">
+<meta name="keywords" content="Babel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端工程化之Babel入门：了解Babel">
 <meta property="og:url" content="//linyk.me/2021/12/29/前端工程化之Babel入门：了解Babel/index.html">
 <meta property="og:site_name" content="林粤凯的博客">
-<meta property="og:description" content="谈到前端工程化，脑海中就会浮现Webpack、Eslint、Babel、Gulp、Rollup等字眼，甚至还有CI/CD（持续集成/持续部署）、自动化测试等高深概念。这篇文章将尝试用最简单的白话来了解Babel的概貌，认识Babel在前端工程流中的角色定位，以及基础用法，为之后的前端工程化深入学习做铺垫。 概貌Babel 是什么？Babel 是一个 JavaScript 编译器。 上面这句话就是B">
+<meta property="og:description" content="谈到前端工程化，脑海中就会浮现Webpack、Eslint、Babel、Gulp、Rollup等字眼，甚至还有CI/CD（持续集成/持续部署）、自动化测试等高深概念。这篇文章将尝试用最简单的白话来了解Babel的概貌，认识Babel在前端工程流中的角色定位，以及基础用法，为之后的前端工程化深入学习做铺垫。">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2021-12-31T14:31:46.122Z">
+<meta property="og:updated_time" content="2021-12-31T14:34:25.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端工程化之Babel入门：了解Babel">
-<meta name="twitter:description" content="谈到前端工程化，脑海中就会浮现Webpack、Eslint、Babel、Gulp、Rollup等字眼，甚至还有CI/CD（持续集成/持续部署）、自动化测试等高深概念。这篇文章将尝试用最简单的白话来了解Babel的概貌，认识Babel在前端工程流中的角色定位，以及基础用法，为之后的前端工程化深入学习做铺垫。 概貌Babel 是什么？Babel 是一个 JavaScript 编译器。 上面这句话就是B">
+<meta name="twitter:description" content="谈到前端工程化，脑海中就会浮现Webpack、Eslint、Babel、Gulp、Rollup等字眼，甚至还有CI/CD（持续集成/持续部署）、自动化测试等高深概念。这篇文章将尝试用最简单的白话来了解Babel的概貌，认识Babel在前端工程流中的角色定位，以及基础用法，为之后的前端工程化深入学习做铺垫。">
   
     <link rel="alternative" href="/atom.xml" title="林粤凯的博客" type="application/atom+xml">
   
@@ -228,6 +229,7 @@ var _hmt = _hmt || [];
 
       
         <p>谈到前端工程化，脑海中就会浮现<code>Webpack</code>、<code>Eslint</code>、<code>Babel</code>、<code>Gulp</code>、<code>Rollup</code>等字眼，甚至还有<code>CI/CD</code>（持续集成/持续部署）、自动化测试等高深概念。这篇文章将尝试用最简单的白话来了解Babel的概貌，认识Babel在前端工程流中的角色定位，以及基础用法，为之后的前端工程化深入学习做铺垫。</p>
+<a id="more"></a>
 <h2 id="概貌"><a href="#概貌" class="headerlink" title="概貌"></a>概貌</h2><p><strong>Babel 是什么？Babel 是一个 JavaScript 编译器。</strong></p>
 <p>上面这句话就是Babel的本质，更简单的说，Babel可以把使用ES6/ES7等“高级”语法编写的Javascript代码转换为ES5/ES3的“通俗”语法（也可以把JSX语法转为Javascript）。</p>
 <p>随着ECMAScript 标准规范发展越来越快，新语法层出不穷，然而浏览器更新却存在着滞后性，对ECMAScript新标准支持程度不一，Web前端开发者眼巴巴看着各种“高大上”、“简洁”、“实用”的语法和API，却不敢在实际项目中直接使用，以免由于浏览器不兼容导致各种问题，于是Babel诞生了！</p>
@@ -304,6 +306,17 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Babel</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -513,6 +526,10 @@ window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="tex
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Babel</a>
               </li>
             
             <div class="clearfix"></div>

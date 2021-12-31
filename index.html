@@ -229,72 +229,9 @@ var _hmt = _hmt || [];
 
       
         <p>谈到前端工程化，脑海中就会浮现<code>Webpack</code>、<code>Eslint</code>、<code>Babel</code>、<code>Gulp</code>、<code>Rollup</code>等字眼，甚至还有<code>CI/CD</code>（持续集成/持续部署）、自动化测试等高深概念。这篇文章将尝试用最简单的白话来了解Babel的概貌，认识Babel在前端工程流中的角色定位，以及基础用法，为之后的前端工程化深入学习做铺垫。</p>
-<h2 id="概貌"><a href="#概貌" class="headerlink" title="概貌"></a>概貌</h2><p><strong>Babel 是什么？Babel 是一个 JavaScript 编译器。</strong></p>
-<p>上面这句话就是Babel的本质，更简单的说，Babel可以把使用ES6/ES7等“高级”语法编写的Javascript代码转换为ES5/ES3的“通俗”语法（也可以把JSX语法转为Javascript）。</p>
-<p>随着ECMAScript 标准规范发展越来越快，新语法层出不穷，然而浏览器更新却存在着滞后性，对ECMAScript新标准支持程度不一，Web前端开发者眼巴巴看着各种“高大上”、“简洁”、“实用”的语法和API，却不敢在实际项目中直接使用，以免由于浏览器不兼容导致各种问题，于是Babel诞生了！</p>
-<p>从此以后，我们也可以尽情地使用“高大上”的ES6+高级语法了，只要经过Babel转换，最终输出的代码是啥样的我们不再那么关心，只要浏览器能读懂并执行就行。</p>
-<p>也许你会担心经过Babel转换后的代码太过难以阅读，调试起来会非常困难。幸好Babel支持了一个叫做Source map的特性，使我们调试起来也和直接写ES5/ES3代码的调试方式一样简单，而这对我们来说，只需要启用一个配置项就可以做到。</p>
-<h2 id="Babel在前端工程流中的角色定位"><a href="#Babel在前端工程流中的角色定位" class="headerlink" title="Babel在前端工程流中的角色定位"></a>Babel在前端工程流中的角色定位</h2><p>我们知道，如今前端工程流中最耳熟能详的一个词是：<code>Webpack</code>. 现在很多前端项目脚手架都内置依赖了webpack，且提供了一套默认配置，做到开箱即用。我们只需要按照官网文档给出的步骤，一个命令一个命令去执行，如<code>npm run serve</code>、<code>npm run build</code>…，即可实现大部分开发场景需求，在需要定制化的情况下，甚至自己建一个<code>vue.config.js</code>文件去按照文档说明扩展配置即可，不再需要了解webpack的具体用法就能“叱咤Vue界”。</p>
-<p>这是前端工程化发展的必然，有句话说得好，“懒人改变世界”，技术的发展造福了更多的懒人。在这样的大背景下，Webpack的细节被隐藏和弱化，更别提Babel了。我们可以在项目看到一个<code>.babelrc</code>文件，却大部分时间都不会注意到它，更别说打开它和编辑它了。</p>
-<p>但就是这么一个低存在感的小透明，却承担起了巨大的责任，在背后默默工作，辛苦地把你新编写的ES6 <code>class</code>转换成了平凡的构造函数，在你<code>Ctrl + S</code>之后看到浏览器页面焕然一新的瞬间，你可会想到这个小透明做的事情有多么伟大？当然，这一切也离不开老大哥Webpack的提携，在Webpack的Loader机制下，Babel在这里作为<strong>Webpack loader角色</strong>的一员勤勤恳恳工作着。</p>
-<p>除了作为Webpack loader，Babel当然也能孤军奋战，独当一面，文章后面将介绍Babel单独使用和结合Webpack使用两种用法。</p>
-<h2 id="Babel工具集"><a href="#Babel工具集" class="headerlink" title="Babel工具集"></a>Babel工具集</h2><p>在使用Babel之前，我们先要知道Babel包含哪些东西，是的，它不是一个单一的工具，一开始它确实是一个单一的Javascript转换器，但现在它变成了一个工具集……别慌，它并没有因此变得很复杂，之所以这么设计是有原因的：</p>
-<pre><code>在Babel 6以前，Babel是一个专注且单一的Javascript转换器，然而Babel团队的志向不仅于此，更想把Babel打造成一个平台，由各个不同的功能模块和可插拔插件组成，用于创建下一代JavaScript工具集。
-</code></pre><blockquote>
-<p>详见<a href="http://linyk.me/2017/03/31/babel-usage/" target="_blank" rel="noopener">Babel 6.0之babel-cli和babel-core的用法和区别</a></p>
-</blockquote>
-<p>自Babel 7起，Babel团队改用作用域软件包，因此您现在必须使用<code>@babel/core</code>而不是<code>babel-core</code>.但实质上，<code>@babel/core</code>只是<code>babel-core</code>的较新版本。这样做是为了更好地区分哪些软件包是官方软件包，哪些是第三方软件包。</p>
-<p>Babel7包含了核心包<code>@babel/core</code>、终端命令行界面工具<code>@babel/cli</code>以及各种语法转换规则包（官方称之为<code>preset</code>，即“预设”）如<code>@babel/preset-env</code>、<code>@babel/preset-react</code>、<code>@babel/preset-typescript</code>、<code>@babel/preset-flow</code>，这些都是按需安装使用的，后面介绍用法时你将了解它们的用途。</p>
-<pre><code>在Babel 7之前，存在按年度区分的语法预设包如preset-es2015、preset-es2016、preset-es2017等，从Babel 7开始，Babel团队删除（并停止发布）了任何年度的preset（preset-es2015 等）， @babel/preset-env取代了对这些内容的需求，因为它包含了所有年度所添加内容以及针对特定浏览器集兼容的能力。
-</code></pre><p>Babel工具集还包含一个叫做<code>@babel/polyfill</code>的库，作用是针对ES6+的一些新的内置API使用基础JS语法进行模拟实现，以适用较低版本的浏览器。而<code>@babel/core</code>只做语法（Syntax）转换（如class、箭头函数等），不实现Api polyfill。</p>
-<pre><code>polyfill在英文中有垫片的意思，意为兜底的东西。
-
-@babel/polyfill模拟一个完全的 ES2015+ 的环境，实现了新的特性比如 Promise 或者 WeakMap， 静态方法比如Array.from 或 Object.assign, 实例方法 比如 Array.prototype.includes 和 generator 函数。
-
-从babel V7.4.0版本开始，已经不建议使用该包，建议使用core-js/stable、regenerator-runtime/runtime替代。
-</code></pre><blockquote>
-<p>找个时间另外写一下这块的细节，可以先查阅官网文档<a href="https://babeljs.io/docs/en/babel-polyfill" target="_blank" rel="noopener">@babel/polyfill</a></p>
-</blockquote>
-<p>除此之外，这里简单提一下Babel插件（Plugin）的概念，不做深入。在Babel中，代码转换功能以插件的形式出现，插件是小型的 JavaScript 程序，用于指导 Babel 如何对代码进行转换。你甚至可以编写自己的插件将你所需要的任何代码转换功能应用到你的代码上。Babel插件分为语法插件和转换插件两种：</p>
-<pre><code>语法插件：大多数语法都可以被 Babel 转换。在极少数情况下（如果转换还没有实现，或者没有默认的方式来实现），你可以使用语法插件，例如@babel/plugin-syntax-bigint只允许 Babel解析特定类型的语法。
-
-转换插件：转换您的代码，转换插件将启用相应的语法插件，因此您不必同时指定两者。
-</code></pre><p>实际上Babel预设（Preset）就是一组Babel插件的集合，比如Babel 6.0中的 <code>babel-preset-es2015</code> 包含所有跟ES6转换有关的插件。如果没有预设，babel转化是需要指定用什么插件的，虽然颗粒度小，效率高，但是插件需要逐个安装，还有严格的配置声明顺序。本文后面不再深入叙述插件相关的概念，等有时间将写一篇文章进一步深入学习Babel的原理。</p>
-<h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><h3 id="单独使用Babel"><a href="#单独使用Babel" class="headerlink" title="单独使用Babel"></a>单独使用Babel</h3><h5 id="babel-core-babel-cli-babel-preset-env"><a href="#babel-core-babel-cli-babel-preset-env" class="headerlink" title="@babel/core + @babel/cli + @babel/preset-env"></a>@babel/core + @babel/cli + @babel/preset-env</h5><p>Babel 的核心功能包含在 @babel/core 模块中。通过以下命令安装：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @babel/core</span><br></pre></td></tr></table></figure>
-<p>你也可以在 JavaScript 程序中直接 require 并使用它：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> babel = <span class="built_in">require</span>(<span class="string">"@babel/core"</span>);</span><br><span class="line"></span><br><span class="line">babel.transformSync(<span class="string">"code"</span>, optionsObject);</span><br></pre></td></tr></table></figure>
-<p>一般情况下，如果单独使用Babel来完成整个工作流，我们会借助<code>@babel/cli</code>实现在终端（命令行）中快速使用babel命令进行代码转换。</p>
-<p><code>@babel/cli</code> 是一个能够从终端（命令行）便捷使用<code>@babel/core</code>能力的工具。下面是其安装命令和基本用法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @babel/core @babel/cli</span><br><span class="line"></span><br><span class="line">./node_modules/.bin/babel src --out-dir lib</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>你可以利用 <a href="mailto:npm@5.2.0" target="_blank" rel="noopener">npm@5.2.0</a> 所自带的 npm 包运行器将 <code>./node_modules/.bin/babel</code> 命令缩短为 <code>npx babel</code>. 后文将使用<code>npx</code>方式执行，不再赘述</p>
-</blockquote>
-<p>这将解析 src 目录下的所有 JavaScript 文件，并应用我们所指定的代码转换功能，然后把每个文件输出到 lib 目录下。<strong>由于我们还没有指定任何代码转换功能，所以输出的代码将与输入的代码相同（不保留原代码格式）</strong>。</p>
-<p>实际场景中，我们还需要安装其他转换插件作为参数传递进去，将它们集成到 <code>@babel/core</code> 工作流程中，来实现我们所需的指定规则代码转换功能。我们将只使用 <code>@babel/preset-env</code> 这一个插件预设来实现我们的基础功能。</p>
-<p>在上面的基础上，继续执行：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev @babel/preset-env</span><br><span class="line"></span><br><span class="line">npx babel src --out-dir lib --presets=@babel/env</span><br></pre></td></tr></table></figure>
-<p>上面相比于之前的执行多了一个传参<code>--presets=@babel/env</code>，这将告诉 <code>@babel/cli</code> 使用 <code>@babel/core</code> 结合 <code>@babel/preset-env</code> 预设进行代码转换，在通过命令行传递 <code>preset</code> 时，我们也可以指定该 <code>preset</code> 的一些相关参数，对转换后的代码进行细节上的控制（例如可以控制转换后的JS代码版本需要支持哪些浏览器），但是因为这样的话命令会显得很长且十分繁琐，我们更喜欢将这些参数以JSON的格式存放到一个固定的配置文件中。</p>
-<p>现在，我们首先创建一个名为 <code>babel.config.json</code> 的文件（需要 v7.8.0 或更高版本），并包含如下内容：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"presets"</span>: [</span><br><span class="line">    [</span><br><span class="line">      <span class="string">"@babel/preset-env"</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"targets"</span>: <span class="string">"&gt; 0.25%, not dead"</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>该配置表示仅包含浏览器市场份额 &gt;0.25％ 的用户所需的代码转换。</p>
-<p>官方也建议使用.browserslistrc文件来代替targets的配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; 0.25%</span><br><span class="line">not dead</span><br></pre></td></tr></table></figure>
-<p>或者package.json：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;browserslist&quot;: &quot;&gt; 0.25%, not dead&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有了上述配置文件之后，我们只需要这么执行就可以了：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx babel src --out-dir lib</span><br></pre></td></tr></table></figure>
-<p>Babel支持更多的配置方式，详见<a href="https://www.babeljs.cn/docs/usage" target="_blank" rel="noopener">配置 Babel</a>，目前来说我们这么用就可以了。</p>
-<h3 id="结合Webpack使用Babel"><a href="#结合Webpack使用Babel" class="headerlink" title="结合Webpack使用Babel"></a>结合Webpack使用Babel</h3><p>实际项目中单独使用Babel的命令行工具来实现工作流的情况不是很多，更多的是结合Webpack使用。</p>
-<p>在webpack.config.js中添加以下loader配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">  module: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: /\.js$/,</span><br><span class="line">        exclude: /node_modules/,</span><br><span class="line">        use: [</span><br><span class="line">          &#123;</span><br><span class="line">            loader: &apos;babel-loader&apos;,</span><br><span class="line">            options: &#123;</span><br><span class="line">              presets: [&quot;@babel/preset-env&quot;]</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后安装相应的依赖：babel-loader、@babel/core、@babel/preset-env:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-loader @babel/core @babel/preset-env</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>上面是将babel的preset参数配置在了webpack.config.js中，实际上也可以将它按照babel配置文件的原则提取出来单独一个babel.config.json文件，效果是一样的。</p>
-</blockquote>
-<p>这样就完成了在webpack项目中添加Babel转换ES6+代码的功能。在webpack打包的过程中，会将源代码经由<code>babel-loader</code>处理转换为目标代码，这一执行过程对我们来只说是打包时“顺势而为”的，我们再也不用关心Babel本身的命令细节了。</p>
-
+        
+          <a class="article-more-a" href="/2021/12/29/前端工程化之Babel入门：了解Babel/#more">more >></a>
+        
       
 
       
@@ -305,6 +242,17 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Babel</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -962,6 +910,10 @@ var _hmt = _hmt || [];
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Babel</a>
               </li>
             
             <div class="clearfix"></div>
